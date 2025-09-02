@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  n8n_svc:
+    build: ./docker/n8n
+    image: local-n8n:latest
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - NODE_FUNCTION_ALLOW_BUILTIN=*
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=postgres
+      - DB_POSTGRESDB_PASSWORD=postgres
+      - EXECUTIONS_MODE=regular
+      - N8N_CONCURRENCY_PRODUCTION_LIMIT=12
+    volumes:
+      - ./data/n8n:/home/node/.n8n
+      - ./documents:/documents
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: n8n
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 60s
+      timeout: 10s
+      retries: 5
+
+  qdrant_svc:
+    image: qdrant/qdrant:latest
+    restart: always
+    ports:
+      - "6333:6333"
+    volumes:
+      - ./data/qdrant:/qdrant/storage
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - "8081:8080"
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    restart: always
+    ports:
+      - "8082:5540"
+    volumes:
+      - ./data/redisinsight:/data
+
+  mongo:
+    build: ./docker/mongo
+    image: local-mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_DATABASE: mongo
+      APP_USER: mongo
+      APP_PASS: mongo
+    volumes:
+      - ./data/mongo:/data/db
+
+  proxy_svc:
+    image: nginx:alpine
+    restart: unless-stopped
+    expose:
+      - "80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./config/proxy.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      default:
+        aliases:
+          - ollama
+          - qdrant
+          - mongo

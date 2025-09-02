@@ -1,0 +1,1809 @@
+{
+  "name": "RAG Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('onFS').item.json.event }}",
+                    "rightValue": "add",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "58fa408f-c1ea-4512-b4e5-70e0991a249a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "add"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "da099347-4b1e-432a-bb24-a2d87dfc9e57",
+                    "leftValue": "={{ $('onFS').item.json.event }}",
+                    "rightValue": "change",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "upd"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d2d23478-71dd-4485-b225-7454e79b1b79",
+                    "leftValue": "={{ $('onFS').item.json.event }}",
+                    "rightValue": "unlink",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "del"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        96,
+        -48
+      ],
+      "id": "82fe148b-6c34-47a5-b385-32069dd72d76",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "type": "SHA256",
+        "value": "=path={{ $json.path }}",
+        "dataPropertyName": "hash"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -16
+      ],
+      "id": "be16dbdd-63fb-4d22-b782-b0455c0e38a1",
+      "name": "hashPath"
+    },
+    {
+      "parameters": {
+        "triggerOn": "folder",
+        "path": "/documents/corpus",
+        "events": [
+          "add",
+          "change",
+          "unlink"
+        ],
+        "options": {
+          "awaitWriteFinish": true,
+          "followSymlinks": true,
+          "ignored": ".DS_Store",
+          "ignoreInitial": true,
+          "usePolling": false,
+          "ignoreMode": "match"
+        }
+      },
+      "type": "n8n-nodes-base.localFileTrigger",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        -224
+      ],
+      "id": "49b63cbe-9feb-47f9-b1b7-daf6d5d28c9a",
+      "name": "onFS"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "state",
+        "key": "=corpus.{{ $json.hash }}",
+        "keyType": "string",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -16
+      ],
+      "id": "5d7ce110-9837-4f48-89a0-d8e49d653981",
+      "name": "readState",
+      "credentials": {
+        "redis": {
+          "id": "8bQQYAUHxegPNwcL",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ef791ad2-c2ae-4696-a574-761c92ebe852",
+              "leftValue": "={{ $json.state }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        272,
+        -288
+      ],
+      "id": "d0b5d37b-d979-494a-8be7-dc9272bda186",
+      "name": "!exists"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ef791ad2-c2ae-4696-a574-761c92ebe852",
+              "leftValue": "={{ $json.state }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        272,
+        -160
+      ],
+      "id": "f290971f-9838-4cb9-bf2f-67c41473dd5a",
+      "name": "exists"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const s = $input.item.json.path.split(\".\");\nconst x = s[s.length - 1].toLowerCase();\n$input.item.json.extension = x;\n\nconst valid = [\n  \"txt\",\n  \"md\",\n  \"pdf\",\n  \"docx\",\n  \"rtf\",\n  \"htm\", \"html\",\n  \"yaml\", \"yml\", \"conf\"\n];\n\n$input.item.json.valid = valid.includes(x);\n\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        -224
+      ],
+      "id": "e9ba288e-e643-4562-9c2e-da7418a9ecad",
+      "name": "ext"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8387e927-6a61-4aee-8634-12f891040907",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        48,
+        -224
+      ],
+      "id": "d415cb71-7f1b-4003-bf88-04c3db48d807",
+      "name": "valid"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "keys",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        288,
+        -704
+      ],
+      "id": "ecb297f0-bac6-4fea-8f3b-28e993e4e6d5",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "692d31f8-7b4f-4e3c-905a-8b2bab720bf6",
+              "name": "key",
+              "value": "={{ $json.keys }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -704
+      ],
+      "id": "8353cfa4-126f-4ea2-8a00-b82502dbd1ec",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8464ad8d-1d3e-4531-978c-0988f4b32425",
+              "leftValue": "={{ $json.stdout }}",
+              "rightValue": "missing",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        160,
+        -496
+      ],
+      "id": "2c1cc8c1-41a3-4338-b28c-7cb25c7e6b0d",
+      "name": "missing?"
+    },
+    {
+      "parameters": {
+        "operation": "keys",
+        "keyPattern": "*",
+        "getValues": false
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -704
+      ],
+      "id": "f4038635-e467-46eb-98ea-570101bc12ea",
+      "name": "keys",
+      "credentials": {
+        "redis": {
+          "id": "8bQQYAUHxegPNwcL",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "path",
+        "key": "={{ $json.key }}",
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        -496
+      ],
+      "id": "1ea1e0be-059b-45a6-908d-293e3e988d56",
+      "name": "get",
+      "credentials": {
+        "redis": {
+          "id": "8bQQYAUHxegPNwcL",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "type": "SHA256",
+        "value": "=path={{ $('get').item.json.path }}",
+        "dataPropertyName": "hash"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        288,
+        -496
+      ],
+      "id": "a61333e1-c494-4792-8479-cf20e0295cc7",
+      "name": "hashPath1"
+    },
+    {
+      "parameters": {
+        "content": "# Boot\nAutomatically handles orphans from missed events, and handles initial setups",
+        "height": 464,
+        "width": 768,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -800
+      ],
+      "id": "e2c59210-0e6d-4f91-bb77-9aa228e8ff89",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "events": [
+          "init"
+        ]
+      },
+      "type": "n8n-nodes-base.n8nTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        -704
+      ],
+      "id": "deebaf5a-0358-4631-8ce5-0bc7137cb3c8",
+      "name": "onBoot"
+    },
+    {
+      "parameters": {
+        "command": "=test -f \"{{ $json.path }}\" && echo \"exists\" || echo \"missing\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        32,
+        -496
+      ],
+      "id": "da1557e8-de86-48da-8c4e-953fff1237c4",
+      "name": "test"
+    },
+    {
+      "parameters": {
+        "content": "# IO Events\nWatches /documents/corpus and automatically fires install events",
+        "height": 464,
+        "width": 832,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -320
+      ],
+      "id": "d54e487c-54bc-42d5-a2ff-8535ebb54478",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "command": "mkdir -p /documents/corpus && mkdir -p /documents/text"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        32,
+        -704
+      ],
+      "id": "1d9ddb6d-e800-42ea-a5bd-e55427fae836",
+      "name": "Execute Command"
+    },
+    {
+      "parameters": {
+        "command": "=ocrmypdf \"{{ $json.path }}\" /dev/null --output-type none --sidecar {{ $('ext2').item.json.textPath }} --optimize 0 --fast-web-view 999999 --tesseract-downsample-above 5000 --continue-on-soft-render-error --invalidate-digital-signatures --clean --tesseract-timeout 600 --force-ocr --pdf-renderer sandwich"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        832,
+        -128
+      ],
+      "id": "c54026a2-4a80-4cd5-86e7-044ab4328709",
+      "name": "ocr"
+    },
+    {
+      "parameters": {
+        "command": "=pandoc \"{{ $('ext2').item.json.path }}\" -t plain -o {{ $('ext2').item.json.textPath }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        832,
+        0
+      ],
+      "id": "0814fc34-11e3-4ad8-a4a0-e5e70bbfc4e3",
+      "name": "pandoc"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('ext2').item.json.extension }}",
+                    "rightValue": "pdf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "e86a6ee3-d730-45c9-a06e-8d8959663e24"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "pdf"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        688,
+        -128
+      ],
+      "id": "80a899ca-4c54-4cad-a94e-1af27c69635d",
+      "name": "switch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8c79246c-02b6-468f-b55e-c31b78d0c814",
+              "leftValue": "={{ $json.install }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        656,
+        -512
+      ],
+      "id": "971d4f5e-f09c-40e2-9ce9-8ac92f422b35",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        16
+      ],
+      "id": "97cfa95e-3e8a-4ccb-84e4-544dc13ccde5",
+      "name": "nomic",
+      "credentials": {
+        "ollamaApi": {
+          "id": "uRRto14J4fbOBnhw",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "file",
+                "value": "={{ $('ext2').item.json.path }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        1376,
+        16
+      ],
+      "id": "1bcc1dfd-f145-4c35-b548-ec4977ecfdd0",
+      "name": "loader"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "=corpus.{{ $('If').item.json.hashPath }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        848,
+        -288
+      ],
+      "id": "5fd61ba6-dfe3-4816-b324-18cde08dd71f",
+      "name": "saveState",
+      "credentials": {
+        "redis": {
+          "id": "8bQQYAUHxegPNwcL",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=corpus.{{ $('ext2').item.json.hashPath }}",
+        "value": "={{ $('ext2').item.json.path }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        -128
+      ],
+      "id": "36b26425-9b74-4e3f-afaa-512fcb11c76b",
+      "name": "saveState1",
+      "credentials": {
+        "redis": {
+          "id": "8bQQYAUHxegPNwcL",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=test -f \"{{ $json.textPath }}\" && { echo \"exists\"; } || { echo \"missing\"; }"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        -528
+      ],
+      "id": "cee35c87-75c7-4315-821c-e117bde3e099",
+      "name": "exists?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fd360257-029d-42c7-96a8-0a6aa7acb67f",
+              "leftValue": "={{ $json.stdout }}",
+              "rightValue": "missing",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        -528
+      ],
+      "id": "5308c396-324c-4d00-8119-63ae2bca2b6e",
+      "name": "mising?"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('ext2').item.json.textPath }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        -128
+      ],
+      "id": "df464d3b-0506-49a2-a875-62074b4dc580",
+      "name": "read"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const s = $('If').item.json.path.split(\".\");\nlet p = $('If').item.json.path.split(\"/\");\np.pop();\np.pop();\np.push(\"text\");\np.push($('If').item.json.hashPath + \".txt\")\n$input.item.json.extension = s[s.length - 1].toLowerCase();\n$input.item.json.textPath = p.join(\"/\");\n\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        -288
+      ],
+      "id": "f61f0191-9c0f-40b0-bcc8-9bb73db85171",
+      "name": "ext1"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const s = $input.item.json.path.split(\".\");\nlet p = $input.item.json.path.split(\"/\");\np.pop();\np.pop();\np.push(\"text\");\np.push($input.item.json.hashPath + \".txt\")\n$input.item.json.extension = s[s.length - 1].toLowerCase();\n$input.item.json.textPath = p.join(\"/\");\n\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1184,
+        -528
+      ],
+      "id": "9794d242-63cc-40e0-ac47-71fea00ddfbc",
+      "name": "ext2"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "main",
+          "mode": "list",
+          "cachedResultName": "main"
+        },
+        "embeddingBatchSize": 50,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        1264,
+        -128
+      ],
+      "id": "39cd8e26-018b-49bb-87b0-cf78a6d1a753",
+      "name": "install3",
+      "credentials": {
+        "qdrantApi": {
+          "id": "l8KKOWm103sXubkj",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "point",
+        "operation": "deletePoints",
+        "collectionName": {
+          "__rl": true,
+          "value": "main",
+          "mode": "list",
+          "cachedResultName": "main"
+        },
+        "filter": "={\n    \"must\": [\n      {\n        \"key\": \"metadata.file\",\n        \"match\": {\n          \"value\": \"{{ $json.path }}\"\n        }\n      }\n    ]\n  }",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-qdrant.qdrant",
+      "typeVersion": 1,
+      "position": [
+        704,
+        -288
+      ],
+      "id": "640686c2-760b-4485-aa3e-0bf0f107a75c",
+      "name": "uninstall2",
+      "credentials": {
+        "qdrantRestApi": {
+          "id": "3NNZvUwDOwYTVrHs",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=rm -rf {{ $json.textPath }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        -288
+      ],
+      "id": "4e1976a5-d7c6-4b18-be01-da06e8307b17",
+      "name": "Execute Command1"
+    },
+    {
+      "parameters": {
+        "content": "# Install\nReceives a path, hash of the path, and a bool to install or not. Can uninstall with install=false",
+        "height": 768,
+        "width": 1008,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        608,
+        -624
+      ],
+      "id": "b4d77290-4250-4ff6-8394-6441e1d45be0",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $json.keys }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        -496
+      ],
+      "id": "b409a7f6-79e1-4ee6-a04c-5ea2205a239a",
+      "name": "deleteKey",
+      "credentials": {
+        "redis": {
+          "id": "8bQQYAUHxegPNwcL",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "keys",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -496
+      ],
+      "id": "2d72c3d9-dd4f-4a9e-b997-f86e389e7b6e",
+      "name": "loop"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2514da39-5f9b-4684-a713-16821d72cceb",
+              "leftValue": "={{ $json['Type DELETE to confirm'] }}",
+              "rightValue": "DELETE",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -528,
+        -688
+      ],
+      "id": "a7a20851-8c02-4f50-8322-4b331866cf23",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "keys",
+        "keyPattern": "*",
+        "getValues": false
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        -496
+      ],
+      "id": "6b0fa882-6ba1-4ece-a4d1-58f424d63f9f",
+      "name": "keys1",
+      "credentials": {
+        "redis": {
+          "id": "8bQQYAUHxegPNwcL",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Are you Sure?",
+        "formDescription": "You are about to wipe the qDrant vector store, and the redis cache list. This will not delete any actual files in the documents/corpus directory. \n\nOnce executed, remember to de-activate, then re-activate the onFS event to bulk-trigger any existing files in the corpus directory to ensure they are synchronized.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Type DELETE to confirm",
+              "placeholder": "DELETE",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -672,
+        -688
+      ],
+      "id": "d2446aa9-5b44-46b3-9428-e3da4fe0d4bc",
+      "name": "WIPE DB",
+      "webhookId": "64708ba6-bfd4-4442-8767-1ee732dcf8bd"
+    },
+    {
+      "parameters": {
+        "content": "# Wipe Database\nWipes the qDrant DB, redis & caches",
+        "height": 448,
+        "width": 544,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -736,
+        -784
+      ],
+      "id": "3ea266f0-07f0-4899-97c3-3eda84dc8c73",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "resource": "point",
+        "operation": "deletePoints",
+        "collectionName": {
+          "__rl": true,
+          "value": "main",
+          "mode": "list",
+          "cachedResultName": "main"
+        },
+        "filter": "{\n    \"must\": [\n      \n    ]\n  }",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-qdrant.qdrant",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        -688
+      ],
+      "id": "52d7c86f-ed9a-418a-9faa-46cb6409f28b",
+      "name": "wipe",
+      "credentials": {
+        "qdrantRestApi": {
+          "id": "3NNZvUwDOwYTVrHs",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "The knowledge base",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "main",
+          "mode": "list",
+          "cachedResultName": "main"
+        },
+        "topK": 10,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        -512,
+        -80
+      ],
+      "id": "b4c45e47-e543-4ec2-b236-809560faf618",
+      "name": "onQuery",
+      "credentials": {
+        "qdrantApi": {
+          "id": "l8KKOWm103sXubkj",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-oss:20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -704,
+        -80
+      ],
+      "id": "61b2a70d-9451-4c6c-bdea-6afde197219d",
+      "name": "oss",
+      "credentials": {
+        "ollamaApi": {
+          "id": "uRRto14J4fbOBnhw",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful SME on a bunch of information accessible via tool calling. When the user asks you a question, you most likely will need to query the knowledge base first before answering even if it seems like you already know the common answer, always query first.\n\n* Always specify the \"file\" parameter to source where your getting your information from"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -576,
+        -224
+      ],
+      "id": "407e72f7-dbbd-4e3a-bc07-68d4a831644f",
+      "name": "agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -704,
+        -224
+      ],
+      "id": "4fa68724-c5d4-4bac-8460-c46531d1f423",
+      "name": "onChat",
+      "webhookId": "4091fa09-fb9a-4039-9411-7104d213f601"
+    },
+    {
+      "parameters": {
+        "collectionName": "rag_history",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        -608,
+        -80
+      ],
+      "id": "401cb081-c400-4876-88cc-d47519df2708",
+      "name": "memory",
+      "credentials": {
+        "mongoDb": {
+          "id": "fkqtd4eD8KlxUkVd",
+          "name": "MongoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        16
+      ],
+      "id": "389210b0-c786-409a-b7b3-012995283dd2",
+      "name": "nomic1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "uRRto14J4fbOBnhw",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Agent Chat\nChat with the agent to interact with data",
+        "height": 448,
+        "width": 496,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        -320
+      ],
+      "id": "eef2ca4d-44eb-4c8d-a7e2-1dd4c7ddb46b",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "05bc7a77-5549-446c-a923-7abd400e0153",
+              "name": "path",
+              "value": "={{ $('get').item.json.path }}",
+              "type": "string"
+            },
+            {
+              "id": "3742b4d3-68df-48fe-9d06-d422a23a0e13",
+              "name": "install",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "0708efb0-0994-42d1-a648-8ee42b316271",
+              "name": "hashPath",
+              "value": "={{ $('get').item.json.path }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        -496
+      ],
+      "id": "76cccc1c-48d0-4299-8850-edf9a60a3d0e",
+      "name": "prune"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "05bc7a77-5549-446c-a923-7abd400e0153",
+              "name": "path",
+              "value": "={{ $('onFS').item.json.path }}",
+              "type": "string"
+            },
+            {
+              "id": "3742b4d3-68df-48fe-9d06-d422a23a0e13",
+              "name": "install",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "0708efb0-0994-42d1-a648-8ee42b316271",
+              "name": "hashPath",
+              "value": "={{ $('hashPath').item.json.hash }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        -224
+      ],
+      "id": "6bcba530-5bc4-4aff-a4ee-01d195064e0d",
+      "name": "install"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "05bc7a77-5549-446c-a923-7abd400e0153",
+              "name": "path",
+              "value": "={{ $('onFS').item.json.path }}",
+              "type": "string"
+            },
+            {
+              "id": "3742b4d3-68df-48fe-9d06-d422a23a0e13",
+              "name": "install",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "0708efb0-0994-42d1-a648-8ee42b316271",
+              "name": "hashPath",
+              "value": "={{ $('hashPath').item.json.hash }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        -96
+      ],
+      "id": "a6e2ee67-8356-4b4d-820f-8d4666c06c75",
+      "name": "uninstall"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        -32
+      ],
+      "id": "5b655537-a80a-4b0f-86eb-aec72ef27865",
+      "name": "Wait",
+      "webhookId": "5bf3f538-398e-44de-8b28-700cf93111ce"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "!exists",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "exists",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "uninstall",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "hashPath": {
+      "main": [
+        [
+          {
+            "node": "readState",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onFS": {
+      "main": [
+        [
+          {
+            "node": "ext",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "readState": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "!exists": {
+      "main": [
+        [
+          {
+            "node": "install",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "exists": {
+      "main": [
+        [
+          {
+            "node": "uninstall",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "install",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ext": {
+      "main": [
+        [
+          {
+            "node": "valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "valid": {
+      "main": [
+        [
+          {
+            "node": "hashPath",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "get",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "missing?": {
+      "main": [
+        [
+          {
+            "node": "hashPath1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "keys": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get": {
+      "main": [
+        [
+          {
+            "node": "test",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "hashPath1": {
+      "main": [
+        [
+          {
+            "node": "prune",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onBoot": {
+      "main": [
+        [
+          {
+            "node": "Execute Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "test": {
+      "main": [
+        [
+          {
+            "node": "missing?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command": {
+      "main": [
+        [
+          {
+            "node": "keys",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ocr": {
+      "main": [
+        [
+          {
+            "node": "read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pandoc": {
+      "main": [
+        [
+          {
+            "node": "read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "switch": {
+      "main": [
+        [
+          {
+            "node": "ocr",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "pandoc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "ext2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "uninstall2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "nomic": {
+      "ai_embedding": [
+        [
+          {
+            "node": "install3",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "loader": {
+      "ai_document": [
+        [
+          {
+            "node": "install3",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saveState": {
+      "main": [
+        [
+          {
+            "node": "ext1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "exists?": {
+      "main": [
+        [
+          {
+            "node": "mising?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mising?": {
+      "main": [
+        [
+          {
+            "node": "switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "read": {
+      "main": [
+        [
+          {
+            "node": "saveState1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ext1": {
+      "main": [
+        [
+          {
+            "node": "Execute Command1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ext2": {
+      "main": [
+        [
+          {
+            "node": "exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "install3": {
+      "main": [
+        []
+      ]
+    },
+    "uninstall2": {
+      "main": [
+        [
+          {
+            "node": "saveState",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "loop": {
+      "main": [
+        [
+          {
+            "node": "deleteKey",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "keys1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "wipe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "keys1": {
+      "main": [
+        [
+          {
+            "node": "loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WIPE DB": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onQuery": {
+      "ai_tool": [
+        [
+          {
+            "node": "agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "oss": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onChat": {
+      "main": [
+        [
+          {
+            "node": "agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "nomic1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "onQuery",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prune": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "install": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saveState1": {
+      "main": [
+        [
+          {
+            "node": "install3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "uninstall": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "install",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d7b02053-f239-405c-b4b4-d13457073daf",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4b07eb39ab76e508c1311bffcd2dabefcfa1bc354720a93de775e1ebaadf4763"
+  },
+  "id": "fV45wzThtVpcejDY",
+  "tags": [
+    {
+      "createdAt": "2025-08-29T16:03:15.515Z",
+      "updatedAt": "2025-08-29T16:03:15.515Z",
+      "id": "RzzeS825tGUIMHHO",
+      "name": "event"
+    }
+  ]
+}
