@@ -7,6 +7,7 @@ class Source(Enum):
     OCR_TESSERACT = "ocr_tesseract"
     OCR_PADDLE = "ocr_paddle"
     OCR_GOOGLEVISION = "ocr_googlevision"
+    OCR_APPLE = "ocr_apple"
 
 
 class OCRMode(Enum):
