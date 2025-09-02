@@ -16,7 +16,7 @@ services:
       - DB_POSTGRESDB_USER=postgres
       - DB_POSTGRESDB_PASSWORD=postgres
       - EXECUTIONS_MODE=regular
-      - N8N_CONCURRENCY_PRODUCTION_LIMIT=12
+      - N8N_CONCURRENCY_PRODUCTION_LIMIT=4
     volumes:
       - ./data/n8n:/home/node/.n8n
       - ./documents:/documents
@@ -110,6 +110,7 @@ services:
     environment:
       - PORT=8000
       - UNSTRUCTURED_MEMORY_FREE_MINIMUM_MB=2048
+      - UNSTRUCTURED_PARALLEL_MODE_ENABLED=false
     restart: always
     depends_on:
       - qdrant_svc
