@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   n8n_svc:
-    build: ./docker/n8n
-    image: local-n8n:latest
+    image: n8nio/n8n:latest
     restart: always
     ports:
       - "5678:5678"
@@ -105,12 +104,9 @@ services:
     platform: linux/amd64
     ports:
       - "8001:8000"
-    volumes:
-      - ./documents:/documents
     environment:
       - PORT=8000
       - UNSTRUCTURED_MEMORY_FREE_MINIMUM_MB=2048
       - UNSTRUCTURED_PARALLEL_MODE_ENABLED=false
+      - OCR_AGENT=unstructured.partition.utils.ocr_models.paddle_ocr.OCRAgentPaddle
     restart: always
-    depends_on:
-      - qdrant_svc

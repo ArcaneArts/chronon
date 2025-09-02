@@ -89,7 +89,7 @@
         96,
         -48
       ],
-      "id": "82fe148b-6c34-47a5-b385-32069dd72d76",
+      "id": "617fcfa6-65a0-4079-bbd2-d4cefde96fa6",
       "name": "Switch"
     },
     {
@@ -104,7 +104,7 @@
         -160,
         -16
       ],
-      "id": "be16dbdd-63fb-4d22-b782-b0455c0e38a1",
+      "id": "d1f4a3eb-8bb7-4fce-a2cd-cd82764424e1",
       "name": "hashPath"
     },
     {
@@ -120,7 +120,7 @@
           "awaitWriteFinish": true,
           "followSymlinks": true,
           "ignored": ".DS_Store",
-          "ignoreInitial": true,
+          "ignoreInitial": false,
           "usePolling": false,
           "ignoreMode": "match"
         }
@@ -131,7 +131,7 @@
         -208,
         -224
       ],
-      "id": "49b63cbe-9feb-47f9-b1b7-daf6d5d28c9a",
+      "id": "fedfcc91-0cc8-47da-a611-1a37e89c59ba",
       "name": "onFS"
     },
     {
@@ -148,7 +148,7 @@
         -32,
         -16
       ],
-      "id": "5d7ce110-9837-4f48-89a0-d8e49d653981",
+      "id": "f7d4d7be-2f70-474c-a9dc-f1ce9b25db55",
       "name": "readState",
       "credentials": {
         "redis": {
@@ -188,7 +188,7 @@
         272,
         -288
       ],
-      "id": "d0b5d37b-d979-494a-8be7-dc9272bda186",
+      "id": "a055d8c2-5ba3-4fdf-a127-b086dd920366",
       "name": "!exists"
     },
     {
@@ -222,7 +222,7 @@
         272,
         -160
       ],
-      "id": "f290971f-9838-4cb9-bf2f-67c41473dd5a",
+      "id": "06ee53dd-8fe6-4691-b6a5-19c76f8fc4c6",
       "name": "exists"
     },
     {
@@ -236,7 +236,7 @@
         -80,
         -224
       ],
-      "id": "e9ba288e-e643-4562-9c2e-da7418a9ecad",
+      "id": "e1a57a9b-c89b-4fc3-b578-5493b1d75a4e",
       "name": "ext"
     },
     {
@@ -270,7 +270,7 @@
         48,
         -224
       ],
-      "id": "d415cb71-7f1b-4003-bf88-04c3db48d807",
+      "id": "b6f19840-c2e4-43b4-a54a-7ccce7b28bf6",
       "name": "valid"
     },
     {
@@ -284,7 +284,7 @@
         288,
         -704
       ],
-      "id": "ecb297f0-bac6-4fea-8f3b-28e993e4e6d5",
+      "id": "7dbf71ab-1973-4c30-a5cd-33f0e32d7256",
       "name": "Split Out"
     },
     {
@@ -307,7 +307,7 @@
         416,
         -704
       ],
-      "id": "8353cfa4-126f-4ea2-8a00-b82502dbd1ec",
+      "id": "5124601c-f0f1-4ada-88a9-f1daa4c381bd",
       "name": "Edit Fields"
     },
     {
@@ -341,7 +341,7 @@
         160,
         -496
       ],
-      "id": "2c1cc8c1-41a3-4338-b28c-7cb25c7e6b0d",
+      "id": "c95e20ae-0269-41d4-9a3d-41aba7f40c8b",
       "name": "missing?"
     },
     {
@@ -356,7 +356,7 @@
         160,
         -704
       ],
-      "id": "f4038635-e467-46eb-98ea-570101bc12ea",
+      "id": "722c4983-4430-425e-a798-266b64911a66",
       "name": "keys",
       "credentials": {
         "redis": {
@@ -380,7 +380,7 @@
         -96,
         -496
       ],
-      "id": "1ea1e0be-059b-45a6-908d-293e3e988d56",
+      "id": "da4a39ec-6eb7-41c7-8447-4b866afb795d",
       "name": "get",
       "credentials": {
         "redis": {
@@ -401,7 +401,7 @@
         288,
         -496
       ],
-      "id": "a61333e1-c494-4792-8479-cf20e0295cc7",
+      "id": "df732f05-0a45-42a1-80c5-a8236f73cad8",
       "name": "hashPath1"
     },
     {
@@ -417,7 +417,7 @@
         -176,
         -800
       ],
-      "id": "e2c59210-0e6d-4f91-bb77-9aa228e8ff89",
+      "id": "a34eb756-bf69-4450-91b6-6154b1ab1271",
       "name": "Sticky Note"
     },
     {
@@ -432,7 +432,7 @@
         -144,
         -704
       ],
-      "id": "deebaf5a-0358-4631-8ce5-0bc7137cb3c8",
+      "id": "ce806497-02e2-442f-bd85-a6583495658b",
       "name": "onBoot"
     },
     {
@@ -445,7 +445,7 @@
         32,
         -496
       ],
-      "id": "da1557e8-de86-48da-8c4e-953fff1237c4",
+      "id": "8b233cab-43c8-4714-89e2-442265885edc",
       "name": "test"
     },
     {
@@ -461,7 +461,7 @@
         -240,
         -320
       ],
-      "id": "d54e487c-54bc-42d5-a2ff-8535ebb54478",
+      "id": "158cdb81-5558-4ded-ae7f-926548c26870",
       "name": "Sticky Note1"
     },
     {
@@ -474,77 +474,8 @@
         32,
         -704
       ],
-      "id": "1d9ddb6d-e800-42ea-a5bd-e55427fae836",
+      "id": "8813913a-bbac-4635-a29d-a764b939c3d2",
       "name": "Execute Command"
-    },
-    {
-      "parameters": {
-        "command": "=ocrmypdf \"{{ $json.path }}\" /dev/null --output-type none --sidecar {{ $('ext2').item.json.textPath }} --optimize 0 --fast-web-view 999999 --tesseract-downsample-above 5000 --continue-on-soft-render-error --invalidate-digital-signatures --clean --tesseract-timeout 600 --force-ocr --pdf-renderer sandwich"
-      },
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
-        832,
-        -128
-      ],
-      "id": "c54026a2-4a80-4cd5-86e7-044ab4328709",
-      "name": "ocr"
-    },
-    {
-      "parameters": {
-        "command": "=pandoc \"{{ $('ext2').item.json.path }}\" -t plain -o {{ $('ext2').item.json.textPath }}"
-      },
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
-        832,
-        0
-      ],
-      "id": "0814fc34-11e3-4ad8-a4a0-e5e70bbfc4e3",
-      "name": "pandoc"
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('ext2').item.json.extension }}",
-                    "rightValue": "pdf",
-                    "operator": {
-                      "type": "string",
-                      "operation": "equals"
-                    },
-                    "id": "e86a6ee3-d730-45c9-a06e-8d8959663e24"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "pdf"
-            }
-          ]
-        },
-        "options": {
-          "fallbackOutput": "extra"
-        }
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        688,
-        -128
-      ],
-      "id": "80a899ca-4c54-4cad-a94e-1af27c69635d",
-      "name": "switch"
     },
     {
       "parameters": {
@@ -574,10 +505,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        656,
-        -512
+        624,
+        -496
       ],
-      "id": "971d4f5e-f09c-40e2-9ce9-8ac92f422b35",
+      "id": "a4c6a686-c327-4b7c-af40-08d079f371ab",
       "name": "If"
     },
     {
@@ -587,10 +518,10 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        1280,
-        16
+        800,
+        -128
       ],
-      "id": "97cfa95e-3e8a-4ccb-84e4-544dc13ccde5",
+      "id": "fe8796b6-f989-44fe-a060-45aeab6c6e87",
       "name": "nomic",
       "credentials": {
         "ollamaApi": {
@@ -602,6 +533,8 @@
     {
       "parameters": {
         "dataType": "binary",
+        "loader": "textLoader",
+        "textSplittingMode": "custom",
         "options": {
           "metadata": {
             "metadataValues": [
@@ -616,10 +549,10 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        1376,
-        16
+        896,
+        -128
       ],
-      "id": "1bcc1dfd-f145-4c35-b548-ec4977ecfdd0",
+      "id": "29ae01f2-f3af-44b2-89a7-3b1bbe041db8",
       "name": "loader"
     },
     {
@@ -630,10 +563,10 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        848,
-        -288
+        800,
+        -16
       ],
-      "id": "5fd61ba6-dfe3-4816-b324-18cde08dd71f",
+      "id": "dd731e20-ecbe-44c0-9372-de8498202f61",
       "name": "saveState",
       "credentials": {
         "redis": {
@@ -651,10 +584,10 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        1136,
-        -128
+        1152,
+        -272
       ],
-      "id": "36b26425-9b74-4e3f-afaa-512fcb11c76b",
+      "id": "5e8e86ad-17ee-44c6-8930-7033614571e9",
       "name": "saveState1",
       "credentials": {
         "redis": {
@@ -665,91 +598,30 @@
     },
     {
       "parameters": {
-        "command": "=test -f \"{{ $json.textPath }}\" && { echo \"exists\"; } || { echo \"missing\"; }"
-      },
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
-        1312,
-        -528
-      ],
-      "id": "cee35c87-75c7-4315-821c-e117bde3e099",
-      "name": "exists?"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "fd360257-029d-42c7-96a8-0a6aa7acb67f",
-              "leftValue": "={{ $json.stdout }}",
-              "rightValue": "missing",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        1440,
-        -528
-      ],
-      "id": "5308c396-324c-4d00-8119-63ae2bca2b6e",
-      "name": "mising?"
-    },
-    {
-      "parameters": {
-        "fileSelector": "={{ $('ext2').item.json.textPath }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
-      "position": [
-        1008,
-        -128
-      ],
-      "id": "df464d3b-0506-49a2-a875-62074b4dc580",
-      "name": "read"
-    },
-    {
-      "parameters": {
         "mode": "runOnceForEachItem",
         "jsCode": "const s = $('If').item.json.path.split(\".\");\nlet p = $('If').item.json.path.split(\"/\");\np.pop();\np.pop();\np.push(\"text\");\np.push($('If').item.json.hashPath + \".txt\")\n$input.item.json.extension = s[s.length - 1].toLowerCase();\n$input.item.json.textPath = p.join(\"/\");\n\nreturn $input.item;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        992,
-        -288
+        912,
+        -16
       ],
-      "id": "f61f0191-9c0f-40b0-bcc8-9bb73db85171",
+      "id": "7b0f8060-de68-43ff-b922-d3816efe3432",
       "name": "ext1"
     },
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "const s = $input.item.json.path.split(\".\");\nlet p = $input.item.json.path.split(\"/\");\np.pop();\np.pop();\np.push(\"text\");\np.push($input.item.json.hashPath + \".txt\")\n$input.item.json.extension = s[s.length - 1].toLowerCase();\n$input.item.json.textPath = p.join(\"/\");\n\nreturn $input.item;"
+        "jsCode": "const s = $input.item.json.path.split(\".\");\n$input.item.json.extension = s[s.length - 1].toLowerCase();\n$input.item.json.textPath = `/documents/text/${$input.item.json.hashPath}.txt`;\nreturn $input.item;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1184,
-        -528
+        752,
+        -496
       ],
-      "id": "9794d242-63cc-40e0-ac47-71fea00ddfbc",
+      "id": "59164c23-f10b-4b19-85b3-531d5ba87d90",
       "name": "ext2"
     },
     {
@@ -761,16 +633,16 @@
           "mode": "list",
           "cachedResultName": "main"
         },
-        "embeddingBatchSize": 50,
+        "embeddingBatchSize": 100,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1.3,
       "position": [
-        1264,
-        -128
+        800,
+        -272
       ],
-      "id": "39cd8e26-018b-49bb-87b0-cf78a6d1a753",
+      "id": "740b4d22-28fc-4fcd-8079-cb32e2a2bf7d",
       "name": "install3",
       "credentials": {
         "qdrantApi": {
@@ -795,10 +667,10 @@
       "type": "n8n-nodes-qdrant.qdrant",
       "typeVersion": 1,
       "position": [
-        704,
-        -288
+        688,
+        -16
       ],
-      "id": "640686c2-760b-4485-aa3e-0bf0f107a75c",
+      "id": "81eeaae6-9231-4c6e-852f-771a485f61bb",
       "name": "uninstall2",
       "credentials": {
         "qdrantRestApi": {
@@ -809,31 +681,18 @@
     },
     {
       "parameters": {
-        "command": "=rm -rf {{ $json.textPath }}"
-      },
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
-        1136,
-        -288
-      ],
-      "id": "4e1976a5-d7c6-4b18-be01-da06e8307b17",
-      "name": "Execute Command1"
-    },
-    {
-      "parameters": {
         "content": "# Install\nReceives a path, hash of the path, and a bool to install or not. Can uninstall with install=false",
-        "height": 768,
-        "width": 1008,
+        "height": 736,
+        "width": 752,
         "color": 5
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
         608,
-        -624
+        -592
       ],
-      "id": "b4d77290-4250-4ff6-8394-6441e1d45be0",
+      "id": "f950fc8a-3670-4e99-ac7f-b100a1d92659",
       "name": "Sticky Note2"
     },
     {
@@ -847,7 +706,7 @@
         -384,
         -496
       ],
-      "id": "b409a7f6-79e1-4ee6-a04c-5ea2205a239a",
+      "id": "56761cf5-8baa-4487-aaa3-a9ce3679dba6",
       "name": "deleteKey",
       "credentials": {
         "redis": {
@@ -867,7 +726,7 @@
         -528,
         -496
       ],
-      "id": "2d72c3d9-dd4f-4a9e-b997-f86e389e7b6e",
+      "id": "310ed986-4b47-4675-8896-40895c5a557b",
       "name": "loop"
     },
     {
@@ -901,7 +760,7 @@
         -528,
         -688
       ],
-      "id": "a7a20851-8c02-4f50-8322-4b331866cf23",
+      "id": "98bbda6c-b92c-463d-92de-2fef96182350",
       "name": "If1"
     },
     {
@@ -916,7 +775,7 @@
         -672,
         -496
       ],
-      "id": "6b0fa882-6ba1-4ece-a4d1-58f424d63f9f",
+      "id": "581651c6-aee3-4bed-bf84-6e62dd59ec97",
       "name": "keys1",
       "credentials": {
         "redis": {
@@ -924,31 +783,6 @@
           "name": "Redis account"
         }
       }
-    },
-    {
-      "parameters": {
-        "formTitle": "Are you Sure?",
-        "formDescription": "You are about to wipe the qDrant vector store, and the redis cache list. This will not delete any actual files in the documents/corpus directory. \n\nOnce executed, remember to de-activate, then re-activate the onFS event to bulk-trigger any existing files in the corpus directory to ensure they are synchronized.",
-        "formFields": {
-          "values": [
-            {
-              "fieldLabel": "Type DELETE to confirm",
-              "placeholder": "DELETE",
-              "requiredField": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.formTrigger",
-      "typeVersion": 2.3,
-      "position": [
-        -672,
-        -688
-      ],
-      "id": "d2446aa9-5b44-46b3-9428-e3da4fe0d4bc",
-      "name": "WIPE DB",
-      "webhookId": "64708ba6-bfd4-4442-8767-1ee732dcf8bd"
     },
     {
       "parameters": {
@@ -963,7 +797,7 @@
         -736,
         -784
       ],
-      "id": "3ea266f0-07f0-4899-97c3-3eda84dc8c73",
+      "id": "8dd955bf-8f4b-4b0e-a9b0-e34e9c5d6511",
       "name": "Sticky Note4"
     },
     {
@@ -985,7 +819,7 @@
         -384,
         -688
       ],
-      "id": "52d7c86f-ed9a-418a-9faa-46cb6409f28b",
+      "id": "8b917e57-e279-4820-a47b-fd834cab7aa8",
       "name": "wipe",
       "credentials": {
         "qdrantRestApi": {
@@ -1004,7 +838,7 @@
           "mode": "list",
           "cachedResultName": "main"
         },
-        "topK": 10,
+        "topK": 30,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
@@ -1013,7 +847,7 @@
         -512,
         -80
       ],
-      "id": "b4c45e47-e543-4ec2-b236-809560faf618",
+      "id": "50936468-f895-4d42-9bfa-d2f6ca02186c",
       "name": "onQuery",
       "credentials": {
         "qdrantApi": {
@@ -1033,7 +867,7 @@
         -704,
         -80
       ],
-      "id": "61b2a70d-9451-4c6c-bdea-6afde197219d",
+      "id": "d4a5bade-e7da-4dee-b861-e5b847010c78",
       "name": "oss",
       "credentials": {
         "ollamaApi": {
@@ -1054,7 +888,7 @@
         -576,
         -224
       ],
-      "id": "407e72f7-dbbd-4e3a-bc07-68d4a831644f",
+      "id": "1a560c2b-b2fe-47d7-978d-c938fb41f11d",
       "name": "agent"
     },
     {
@@ -1067,9 +901,9 @@
         -704,
         -224
       ],
-      "id": "4fa68724-c5d4-4bac-8460-c46531d1f423",
+      "id": "ee4977fe-f292-43ec-bc19-f51064c6d4c3",
       "name": "onChat",
-      "webhookId": "4091fa09-fb9a-4039-9411-7104d213f601"
+      "webhookId": "c99bf8f0-9dc8-4643-935c-074d7729e732"
     },
     {
       "parameters": {
@@ -1082,7 +916,7 @@
         -608,
         -80
       ],
-      "id": "401cb081-c400-4876-88cc-d47519df2708",
+      "id": "ac9a52da-b5e2-4806-baf9-98e5e9c62741",
       "name": "memory",
       "credentials": {
         "mongoDb": {
@@ -1101,7 +935,7 @@
         -512,
         16
       ],
-      "id": "389210b0-c786-409a-b7b3-012995283dd2",
+      "id": "e1ed43c6-051e-4bac-b2b3-d085b0828e57",
       "name": "nomic1",
       "credentials": {
         "ollamaApi": {
@@ -1123,7 +957,7 @@
         -752,
         -320
       ],
-      "id": "eef2ca4d-44eb-4c8d-a7e2-1dd4c7ddb46b",
+      "id": "c9a1ae04-45ec-4bf1-9c6c-651e49b54e1b",
       "name": "Sticky Note3"
     },
     {
@@ -1158,7 +992,7 @@
         448,
         -496
       ],
-      "id": "76cccc1c-48d0-4299-8850-edf9a60a3d0e",
+      "id": "f3e3cbe6-52f3-43e2-b6bf-74773541b395",
       "name": "prune"
     },
     {
@@ -1193,7 +1027,7 @@
         480,
         -224
       ],
-      "id": "6bcba530-5bc4-4aff-a4ee-01d195064e0d",
+      "id": "b5bb2e74-0a14-476e-9f5d-37cad0c18670",
       "name": "install"
     },
     {
@@ -1228,7 +1062,7 @@
         480,
         -96
       ],
-      "id": "a6e2ee67-8356-4b4d-820f-8d4666c06c75",
+      "id": "a6acb1f7-cd8a-4ab5-9e86-d5940de5a877",
       "name": "uninstall"
     },
     {
@@ -1239,9 +1073,176 @@
         272,
         -32
       ],
-      "id": "5b655537-a80a-4b0f-86eb-aec72ef27865",
+      "id": "9490ca60-8805-42ec-8f17-6fe4818f2e64",
       "name": "Wait",
-      "webhookId": "5bf3f538-398e-44de-8b28-700cf93111ce"
+      "webhookId": "b0dedc55-e14e-42f3-9841-8005befd467f"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://unstructured/general/v0/general",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "files",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "strategy",
+              "value": "hi_res"
+            },
+            {
+              "name": "languages",
+              "value": "eng"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 3600000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        976,
+        -496
+      ],
+      "id": "895ec8d8-3b32-40ad-82ab-73f81debd7a7",
+      "name": "unstruct"
+    },
+    {
+      "parameters": {
+        "formTitle": "Are you sure?",
+        "formDescription": "You are about to wipe the qDrant vector store, and the redis cache list. This will not delete any actual files in the documents/corpus directory. \\n\\nOnce executed, remember to de-activate, then re-activate the onFS event to bulk-trigger any existing files in the corpus directory to ensure they are synchronized.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Type DELETE to confirm",
+              "placeholder": "DELETE",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -672,
+        -688
+      ],
+      "id": "53fbda4b-3cc7-49ec-9127-f96b4a50ca3b",
+      "name": "On form submission",
+      "webhookId": "6c0c1293-f9e7-42ed-a540-3cc9c4ff4ffb"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('ext2').item.json.path }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        864,
+        -496
+      ],
+      "id": "a240610c-a1e1-4370-84fa-8bed66da51b7",
+      "name": "readf"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=cat <<'___UNIQUE_dfge34k45t55%##$$%#%%%%%DELIMITER___'>> {{ $('ext2').item.json.textPath }}\n{{ $json.text }}\n___UNIQUE_dfge34k45t55%##$$%#%%%%%DELIMITER___"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        -496
+      ],
+      "id": "b7598471-397b-4e1b-9fa6-fe8af40bcfa0",
+      "name": "writeout"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        -496
+      ],
+      "id": "c1e22f11-d63b-4774-b675-a2cf76dc9e43",
+      "name": "waitfor"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('ext2').item.json.textPath }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        688,
+        -272
+      ],
+      "id": "d24d0308-396e-4549-a621-5a4e3a0589b5",
+      "name": "readtext"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        -272
+      ],
+      "id": "cdf767b9-9e98-4ca2-8a7e-1e9c5044abe6",
+      "name": "agg"
+    },
+    {
+      "parameters": {
+        "command": "=rm -rf {{ $json.textPath }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        -16
+      ],
+      "id": "44069345-ba62-43b4-8192-1c5b33c066aa",
+      "name": "remtext"
+    },
+    {
+      "parameters": {
+        "chunkSize": 500,
+        "chunkOverlap": 100,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        -128
+      ],
+      "id": "ba8fb2c7-eea5-470f-af3b-c3b14e1ef571",
+      "name": "rcts"
     }
   ],
   "pinData": {},
@@ -1459,46 +1460,6 @@
         ]
       ]
     },
-    "ocr": {
-      "main": [
-        [
-          {
-            "node": "read",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "pandoc": {
-      "main": [
-        [
-          {
-            "node": "read",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "switch": {
-      "main": [
-        [
-          {
-            "node": "ocr",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "pandoc",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If": {
       "main": [
         [
@@ -1550,51 +1511,11 @@
         ]
       ]
     },
-    "exists?": {
-      "main": [
-        [
-          {
-            "node": "mising?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "mising?": {
-      "main": [
-        [
-          {
-            "node": "switch",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "read",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "read": {
-      "main": [
-        [
-          {
-            "node": "saveState1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "ext1": {
       "main": [
         [
           {
-            "node": "Execute Command1",
+            "node": "remtext",
             "type": "main",
             "index": 0
           }
@@ -1605,7 +1526,7 @@
       "main": [
         [
           {
-            "node": "exists?",
+            "node": "readf",
             "type": "main",
             "index": 0
           }
@@ -1614,7 +1535,13 @@
     },
     "install3": {
       "main": [
-        []
+        [
+          {
+            "node": "agg",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "uninstall2": {
@@ -1660,17 +1587,6 @@
         [
           {
             "node": "loop",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "WIPE DB": {
-      "main": [
-        [
-          {
-            "node": "If1",
             "type": "main",
             "index": 0
           }
@@ -1756,13 +1672,7 @@
     },
     "saveState1": {
       "main": [
-        [
-          {
-            "node": "install3",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "uninstall": {
@@ -1786,18 +1696,106 @@
           }
         ]
       ]
+    },
+    "unstruct": {
+      "main": [
+        [
+          {
+            "node": "writeout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "readf": {
+      "main": [
+        [
+          {
+            "node": "unstruct",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "writeout": {
+      "main": [
+        [
+          {
+            "node": "waitfor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "waitfor": {
+      "main": [
+        [
+          {
+            "node": "readtext",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "readtext": {
+      "main": [
+        [
+          {
+            "node": "install3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agg": {
+      "main": [
+        [
+          {
+            "node": "saveState1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "rcts": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "d7b02053-f239-405c-b4b4-d13457073daf",
+  "versionId": "b8dcba6e-4baa-4ae2-b138-0284bf72222e",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "4b07eb39ab76e508c1311bffcd2dabefcfa1bc354720a93de775e1ebaadf4763"
   },
-  "id": "fV45wzThtVpcejDY",
+  "id": "UCCnXGVIsH05pGPz",
   "tags": [
     {
       "createdAt": "2025-08-29T16:03:15.515Z",
