@@ -1,41 +1,41 @@
-# Setup
-1. Install docker on the host
-2. Install ollama directly on the host
-3. open terminal cd into the folder where this docker-compose.yaml file is
-4. run `docker compose up -d` and wait 10s (~700mb)
-  * run `ollama pull gpt-oss:20b` (~14gb)
-  * run `ollama pull nomic-embed-text:latest` (~300mb)
-5. Open Browser goto `http://localhost:6333/dashboard#/collections` (qdrant) and click create collection
-  * Name it `main` specifically, Use case is `Global Search` Configuration set to `Simple Single Embedding` Choose dimensions is `768` with `Cosine` then Continue then Finish
-6. Open Browser goto `http://localhost:5678/` (n8n) and setup owner account (highly recommend free registration but not essential)
-  * Go to `http://localhost:5678/home/credentials` and click the dropdown next to `Create Workflow` button, and select `Create Credential`
-  * Create an `Ollama` with the Base Url set to `http://host.docker.internal:11434` (leave api key blank)
-  * Create a `QDrant API` with the Rest URI set to `http://host.docker.internal:6333` (api key blank)
-  * Create a `QDrantAPI` with the Qdrant Url set to `http://host.docker.internal:6333` (api key blank) (dont ask me why you need both but you do)
-7. Go back to n8n at `http://localhost:5678/home/workflows` click `Create Workflow`
-  * On the top right click the ... button and select `Import from File` and choose the provided RAG.json file i supplied
-8. Save the workflow and profit!
+# chronon
+"I put my ai backend in my RV"
 
-# To Load in Data
-1. Open workflow and click execute workflow
-2. A form will popup and ask you to upload a file, choose any text document
-3. Hit submit and close the form window when it uploads and wait for the workflow to finish executing
-4. Verify the data was vectorized by going to `http://localhost:6333/dashboard#/collections/main#info` (note `points_count`)
+## Prerequisites
+* Install Docker
+* Install ollama on the host directly (its wildly more efficient)
 
-# To Talk to agent about data
-1. Open workflow and click open chat window
-2. Just talk to it, watch the workflow use the query tool, you can also see this in logs
+## Running the Cluster
+To start the cluster use `docker compose up -d`, To stop the cluster use `docker compose down`
 
-# Memory Requirements
-* n8n (under 1gb)
-* qdrant under 1g if your using my configuration, but if the collection is on a ramdisk, it will increase as you add data, 1gb per 10k points is safe
-* postgres (nothing bro)
-* ollama:
-  * gpt-oss:20b ~16gb vram (otherwise cpu inference, will be slow)
-  * gpt-oss:120b ~80gb vram (otherwise slow as fuck)
+## Files & Paths
+* `data/` This is where all of the services store their actual files
+* `documents/` This is where `n8n`, and `unstructured` can see & manipulate files
+* `docker/` These are custom images for specific needs that are used in compose
+* `config/` These are config files read by specific services
 
-# Model requirements
-* Feel free to swap out the embedding model, though `nomic-embed-text` is the best open source model you can run cheaply so id stick with that
-* Changing the model, i wouldnt recommend running anything lower than 20b, tool calling is actually kind of hard for models, the fact that gpt20b can do it reliably is kind of a miracle, but if the model doesnt support tool calling you will need a different query flow (i.e. direct prompt injection)
+## Route Table
 
-Cheers!
+| Service       | Internal                                | External               |
+|---------------|-----------------------------------------|------------------------|
+| n8n           | http://n8n_svc:5678                     | http://localhost:5678  |
+| unstructured  | http://unstructured                     | http://localhost:8001  |
+| ollama        | http://ollama                           | http://localhost:11434 |
+| postgres      | postgres:5432                           | localhost:5432         |
+| adminer (sql) | http://adminer:8081                     | http://localhost:8081  |
+| redis         | redis:6379                              | localhost:6379         |
+| redisinsight  | http://redisinsight:8082                | http://localhost:8082  |
+| mongodb       | mongo:27017                             | localhost:27017        |
+| qdrant        | http://qdrant or http://qdrant_svc:6333 | http://localhost:6333  |
+
+## Additional n8n nodes
+
+You can find them at https://www.npmjs.com/search?q=keywords%3An8n-community-node-package&page=2&perPage=20
+
+* [n8n-nodes-qdrant](https://www.npmjs.com/package/n8n-nodes-qdrant) Greater control over qdrant through n8n via REST
+* [n8n-nodes-webpage-content-extractor](https://www.npmjs.com/package/n8n-nodes-webpage-content-extractor) This is an n8n community node. It extracts the contents from a given URL. Similar to the 'Reader' mode in your browser, it ignores headers, footers, banners, etc.
+* [n8n-nodes-globals](https://www.npmjs.com/package/n8n-nodes-globals) Lets you use global constants without paying a billion a year to n8n. Global constants across your workflows
+* [n8n-nodes-text-manipulation](https://www.npmjs.com/package/n8n-nodes-text-manipulation) Text manipulation allows various manipulations of strings. 
+* [n8n-nodes-elevenlabs](https://www.npmjs.com/package/@elevenlabs/n8n-nodes-elevenlabs) This is the official ElevenLabs n8n community node.
+* [n8n-nodes-edit-image-plus](https://www.npmjs.com/package/n8n-nodes-edit-image-plus) Image editing utilities
+* [n8n-nodes-supercode](https://www.npmjs.com/package/@kenkaiii/n8n-nodes-supercode) No more 15+ code nodes to solve a basic problem

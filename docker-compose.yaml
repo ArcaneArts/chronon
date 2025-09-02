@@ -98,3 +98,18 @@ services:
           - ollama
           - qdrant
           - mongo
+          - unstructured
+
+  unstructured_api:
+    image: downloads.unstructured.io/unstructured-io/unstructured-api:latest
+    platform: linux/amd64
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./documents:/documents
+    environment:
+      - PORT=8000
+      - UNSTRUCTURED_MEMORY_FREE_MINIMUM_MB=2048
+    restart: always
+    depends_on:
+      - qdrant_svc
