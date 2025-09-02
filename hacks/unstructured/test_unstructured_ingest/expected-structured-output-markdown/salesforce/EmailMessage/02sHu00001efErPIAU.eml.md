@@ -1,2 +1,0 @@
-Jane. This is a test of sending you an email from Salesforce! _____________________________________________________________________ Powered by Salesforce http://www.salesforce.com/
-![](https://unstructuredio-dev-ed.develop.my.salesforce.com/servlet/servlet.ImageServer?oid=00DHu0000018RDe&esid=018Hu00001JMmTZ&from=int)
