@@ -2,8 +2,8 @@
 "I put my ai backend in my RV"
 
 ## Prerequisites
-* Install Docker
-* Install flutter
+* Install docker
+* Install homebrew
 * Install ollama on the host directly (its wildly more efficient)
 * Have 18gb of storage/bandwidth (14gb from gpt-oss:20b & nomic-embed-text models)
 
