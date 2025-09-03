@@ -15,7 +15,7 @@ services:
       - DB_POSTGRESDB_USER=postgres
       - DB_POSTGRESDB_PASSWORD=postgres
       - EXECUTIONS_MODE=regular
-      - N8N_CONCURRENCY_PRODUCTION_LIMIT=4
+      - N8N_CONCURRENCY_PRODUCTION_LIMIT=50
     volumes:
       - ./data/n8n:/home/node/.n8n
       - ./documents:/documents
