@@ -98,6 +98,7 @@ services:
           - qdrant
           - mongo
           - unstructured
+          - helm
 
   unstructured_api:
     image: downloads.unstructured.io/unstructured-io/unstructured-api:latest

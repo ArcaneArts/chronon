@@ -4,3 +4,7 @@ data/
 documents/
 
 .DS_Store
+
+projects/chronon_helm/build/
+
+projects/chronon_helm/Miniconda3-latest-MacOSX-arm64.sh
