@@ -9,13 +9,19 @@ class FileProcessor {
     String output, {
     bool compat = false,
   }) async {
-    return switch ((
-      getExtension(input),
-      Platform.isMacOS && !compat ? 'a' : 'x',
-    )) {
-      ('pdf', 'a') => AppleOCR.performOcr(input, output),
-      _ => UnstructuredProcessor.callUnstructuredApi(input, output),
-    };
+    try {
+      return switch ((
+        getExtension(input),
+        Platform.isMacOS && !compat ? 'a' : 'x',
+      )) {
+        ('pdf', 'a') => AppleOCR.performOcr(input, output),
+        _ => throw Exception(
+          "No OCR method available for this platform or file type",
+        ),
+      };
+    } catch (_) {
+      return UnstructuredProcessor.callUnstructuredApi(input, output);
+    }
   }
 
   static String getExtension(String path) {

@@ -51,7 +51,7 @@ class ChrononHelmServer implements Routing {
     Map<String, dynamic> b = jsonDecode(await request.readAsString());
     String input = helmConfig.toAbs(b['input']);
     String output = helmConfig.toAbs(b['output']);
-    print("`${helmConfig.chronon}` + `${b['input']}` = `$input`");
+    File(output).parent.createSync(recursive: true);
 
     await FileProcessor.processFile(
       input,

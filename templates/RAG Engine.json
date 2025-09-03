@@ -518,8 +518,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        800,
-        -128
+        736,
+        -160
       ],
       "id": "fe8796b6-f989-44fe-a060-45aeab6c6e87",
       "name": "nomic",
@@ -549,8 +549,8 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        896,
-        -128
+        816,
+        -160
       ],
       "id": "29ae01f2-f3af-44b2-89a7-3b1bbe041db8",
       "name": "loader"
@@ -584,8 +584,8 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        1152,
-        -272
+        1168,
+        -288
       ],
       "id": "5e8e86ad-17ee-44c6-8930-7033614571e9",
       "name": "saveState1",
@@ -618,7 +618,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        752,
+        784,
         -496
       ],
       "id": "59164c23-f10b-4b19-85b3-531d5ba87d90",
@@ -639,8 +639,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1.3,
       "position": [
-        800,
-        -272
+        816,
+        -288
       ],
       "id": "740b4d22-28fc-4fcd-8079-cb32e2a2bf7d",
       "name": "install3",
@@ -838,13 +838,13 @@
           "mode": "list",
           "cachedResultName": "main"
         },
-        "topK": 30,
+        "topK": 10,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1.3,
       "position": [
-        -512,
+        -544,
         -80
       ],
       "id": "50936468-f895-4d42-9bfa-d2f6ca02186c",
@@ -864,7 +864,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        -704,
+        -736,
         -80
       ],
       "id": "d4a5bade-e7da-4dee-b861-e5b847010c78",
@@ -885,7 +885,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        -576,
+        -608,
         -224
       ],
       "id": "1a560c2b-b2fe-47d7-978d-c938fb41f11d",
@@ -898,7 +898,7 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.1,
       "position": [
-        -704,
+        -736,
         -224
       ],
       "id": "ee4977fe-f292-43ec-bc19-f51064c6d4c3",
@@ -907,33 +907,13 @@
     },
     {
       "parameters": {
-        "collectionName": "rag_history",
-        "contextWindowLength": 10
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
-      "typeVersion": 1,
-      "position": [
-        -608,
-        -80
-      ],
-      "id": "ac9a52da-b5e2-4806-baf9-98e5e9c62741",
-      "name": "memory",
-      "credentials": {
-        "mongoDb": {
-          "id": "fkqtd4eD8KlxUkVd",
-          "name": "MongoDB account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "model": "nomic-embed-text:latest"
       },
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        -512,
-        16
+        -640,
+        -80
       ],
       "id": "e1ed43c6-051e-4bac-b2b3-d085b0828e57",
       "name": "nomic1",
@@ -947,7 +927,7 @@
     {
       "parameters": {
         "content": "# Agent Chat\nChat with the agent to interact with data",
-        "height": 448,
+        "height": 368,
         "width": 496,
         "color": 6
       },
@@ -1079,95 +1059,6 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "http://unstructured/general/v0/general",
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "parameterType": "formBinaryData",
-              "name": "files",
-              "inputDataFieldName": "data"
-            },
-            {
-              "name": "strategy",
-              "value": "hi_res"
-            },
-            {
-              "name": "languages",
-              "value": "eng"
-            }
-          ]
-        },
-        "options": {
-          "timeout": 3600000
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        976,
-        -496
-      ],
-      "id": "895ec8d8-3b32-40ad-82ab-73f81debd7a7",
-      "name": "unstruct"
-    },
-    {
-      "parameters": {
-        "formTitle": "Are you sure?",
-        "formDescription": "You are about to wipe the qDrant vector store, and the redis cache list. This will not delete any actual files in the documents/corpus directory. \\n\\nOnce executed, remember to de-activate, then re-activate the onFS event to bulk-trigger any existing files in the corpus directory to ensure they are synchronized.",
-        "formFields": {
-          "values": [
-            {
-              "fieldLabel": "Type DELETE to confirm",
-              "placeholder": "DELETE",
-              "requiredField": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.formTrigger",
-      "typeVersion": 2.2,
-      "position": [
-        -672,
-        -688
-      ],
-      "id": "53fbda4b-3cc7-49ec-9127-f96b4a50ca3b",
-      "name": "On form submission",
-      "webhookId": "6c0c1293-f9e7-42ed-a540-3cc9c4ff4ffb"
-    },
-    {
-      "parameters": {
-        "fileSelector": "={{ $('ext2').item.json.path }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
-      "position": [
-        864,
-        -496
-      ],
-      "id": "a240610c-a1e1-4370-84fa-8bed66da51b7",
-      "name": "readf"
-    },
-    {
-      "parameters": {
-        "executeOnce": false,
-        "command": "=cat <<'___UNIQUE_dfge34k45t55%##$$%#%%%%%DELIMITER___'>> {{ $('ext2').item.json.textPath }}\n{{ $json.text }}\n___UNIQUE_dfge34k45t55%##$$%#%%%%%DELIMITER___"
-      },
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
-        1088,
-        -496
-      ],
-      "id": "b7598471-397b-4e1b-9fa6-fe8af40bcfa0",
-      "name": "writeout"
-    },
-    {
-      "parameters": {
         "fieldsToAggregate": {
           "fieldToAggregate": [
             {}
@@ -1178,7 +1069,7 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        1200,
+        1008,
         -496
       ],
       "id": "c1e22f11-d63b-4774-b675-a2cf76dc9e43",
@@ -1192,8 +1083,8 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        688,
-        -272
+        1120,
+        -496
       ],
       "id": "d24d0308-396e-4549-a621-5a4e3a0589b5",
       "name": "readtext"
@@ -1210,8 +1101,8 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        1040,
-        -272
+        1056,
+        -288
       ],
       "id": "cdf767b9-9e98-4ca2-8a7e-1e9c5044abe6",
       "name": "agg"
@@ -1238,11 +1129,85 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        1152,
-        -128
+        1056,
+        -160
       ],
       "id": "ba8fb2c7-eea5-470f-af3b-c3b14e1ef571",
       "name": "rcts"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://helm/process",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "input",
+              "value": "={{ $('ext2').item.json.path }}"
+            },
+            {
+              "name": "output",
+              "value": "={{ $('ext2').item.json.textPath }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 3600000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        896,
+        -496
+      ],
+      "id": "e615ad40-5e4e-487d-a002-20a3d0ce136c",
+      "name": "helm"
+    },
+    {
+      "parameters": {
+        "formTitle": "Are you sure?",
+        "formDescription": "You are about to wipe the qDrant vector store, and the redis cache list. This will not delete any actual files in the documents/corpus directory. \\n\\nOnce executed, remember to de-activate, then re-activate the onFS event to bulk-trigger any existing files in the corpus directory to ensure they are synchronized.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Type DELETE to confirm",
+              "placeholder": "DELETE",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -672,
+        -688
+      ],
+      "id": "53fbda4b-3cc7-49ec-9127-f96b4a50ca3b",
+      "name": "WIPE",
+      "webhookId": "6c0c1293-f9e7-42ed-a540-3cc9c4ff4ffb"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        -208
+      ],
+      "id": "d7f44c4b-f683-4bfb-8378-d9fe91b51897",
+      "name": "MongoDB Chat Memory",
+      "credentials": {
+        "mongoDb": {
+          "id": "fkqtd4eD8KlxUkVd",
+          "name": "MongoDB account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1526,7 +1491,7 @@
       "main": [
         [
           {
-            "node": "readf",
+            "node": "helm",
             "type": "main",
             "index": 0
           }
@@ -1626,17 +1591,6 @@
         ]
       ]
     },
-    "memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "nomic1": {
       "ai_embedding": [
         [
@@ -1697,50 +1651,6 @@
         ]
       ]
     },
-    "unstruct": {
-      "main": [
-        [
-          {
-            "node": "writeout",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "On form submission": {
-      "main": [
-        [
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "readf": {
-      "main": [
-        [
-          {
-            "node": "unstruct",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "writeout": {
-      "main": [
-        [
-          {
-            "node": "waitfor",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "waitfor": {
       "main": [
         [
@@ -1784,13 +1694,46 @@
           }
         ]
       ]
+    },
+    "helm": {
+      "main": [
+        [
+          {
+            "node": "waitfor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WIPE": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "b8dcba6e-4baa-4ae2-b138-0284bf72222e",
+  "versionId": "91a6ab75-bd65-4622-89b6-0e5c37cc4075",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "4b07eb39ab76e508c1311bffcd2dabefcfa1bc354720a93de775e1ebaadf4763"
