@@ -16,20 +16,6 @@
             </list>
           </value>
         </entry>
-        <entry key="apple_vision_commons">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/apple_vision_commons-0.0.3/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="apple_vision_recognize_text">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/apple_vision_recognize_text-0.0.4/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="args">
           <value>
             <list>
@@ -44,41 +30,6 @@
             </list>
           </value>
         </entry>
-        <entry key="bitsdojo_window">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window-0.1.6/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="bitsdojo_window_linux">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window_linux-0.1.4/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="bitsdojo_window_macos">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window_macos-0.1.4/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="bitsdojo_window_platform_interface">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window_platform_interface-0.1.2/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="bitsdojo_window_windows">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window_windows-0.1.6/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="boolean_selector">
           <value>
             <list>
@@ -86,10 +37,10 @@
             </list>
           </value>
         </entry>
-        <entry key="characters">
+        <entry key="chat_color">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/characters-1.4.0/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/chat_color-1.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -111,6 +62,13 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/collection-1.19.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="color">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/color-3.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -149,24 +107,10 @@
             </list>
           </value>
         </entry>
-        <entry key="ffi">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/ffi-2.1.4/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="file">
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/file-7.0.1/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="flutter">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../../../../../flutter/packages/flutter/lib" />
             </list>
           </value>
         </entry>
@@ -233,13 +177,6 @@
             </list>
           </value>
         </entry>
-        <entry key="json_annotation">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/json_annotation-4.9.0/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="json_events">
           <value>
             <list>
@@ -268,20 +205,6 @@
             </list>
           </value>
         </entry>
-        <entry key="material_color_utilities">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/material_color_utilities-0.11.1/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="menu_base">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/menu_base-0.1.1/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="meta">
           <value>
             <list>
@@ -303,13 +226,6 @@
             </list>
           </value>
         </entry>
-        <entry key="ostrich">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/ostrich-1.0.0+1/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="package_config">
           <value>
             <list>
@@ -321,13 +237,6 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path-1.9.1/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="plugin_platform_interface">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8/lib" />
             </list>
           </value>
         </entry>
@@ -356,41 +265,6 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="screen_retriever">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever-0.2.0/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="screen_retriever_linux">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever_linux-0.2.0/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="screen_retriever_macos">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever_macos-0.2.0/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="screen_retriever_platform_interface">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever_platform_interface-0.2.0/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="screen_retriever_windows">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever_windows-0.2.0/lib" />
             </list>
           </value>
         </entry>
@@ -426,20 +300,6 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shelf_web_socket-3.0.0/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="shortid">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shortid-0.1.2/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="sky_engine">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../../../../../flutter/bin/cache/pkg/sky_engine/lib" />
             </list>
           </value>
         </entry>
@@ -520,13 +380,6 @@
             </list>
           </value>
         </entry>
-        <entry key="tray_manager">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/tray_manager-0.5.1/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="typed_data">
           <value>
             <list>
@@ -538,13 +391,6 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/universal_io-2.2.2/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="vector_math">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vector_math-2.2.0/lib" />
             </list>
           </value>
         </entry>
@@ -590,20 +436,6 @@
             </list>
           </value>
         </entry>
-        <entry key="win32">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/win32-5.14.0/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="window_manager">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/window_manager-0.5.1/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="yaml">
           <value>
             <list>
@@ -616,26 +448,19 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-88.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/analyzer-8.1.1/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/apple_vision_commons-0.0.3/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/apple_vision_recognize_text-0.0.4/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/args-2.7.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/async-2.13.0/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window-0.1.6/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window_linux-0.1.4/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window_macos-0.1.4/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window_platform_interface-0.1.2/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/bitsdojo_window_windows-0.1.6/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/boolean_selector-2.1.2/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/characters-1.4.0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/chat_color-1.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/cli_config-0.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/clock-1.1.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/collection-1.19.1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/color-3.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/colored_print-1.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/convert-3.1.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/coverage-1.15.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/crypto-3.0.6/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/fast_log-1.0.7/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/ffi-2.1.4/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/file-7.0.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/frontend_server_client-4.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/glob-2.1.3/lib" />
@@ -646,35 +471,24 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/intl-0.20.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/io-1.0.5/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/js-0.7.2/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/json_annotation-4.9.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/json_events-1.2.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/lints-6.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/logging-1.3.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/matcher-0.12.17/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/material_color_utilities-0.11.1/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/menu_base-0.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.16.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/mime-2.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/node_preamble-2.0.2/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/ostrich-1.0.0+1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/package_config-2.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path-1.9.1/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pool-1.5.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/precision_stopwatch-1.0.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pub_semver-2.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever-0.2.0/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever_linux-0.2.0/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever_macos-0.2.0/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever_platform_interface-0.2.0/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/screen_retriever_windows-0.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shelf-1.4.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shelf_packages_handler-3.0.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shelf_router-1.1.4/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shelf_static-1.1.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shelf_web_socket-3.0.0/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shortid-0.1.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/source_map_stack_trace-2.1.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/source_maps-0.10.13/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/source_span-1.10.1/lib" />
@@ -686,21 +500,15 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/test_api-0.7.7/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/test_core-0.6.12/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/toxic-1.3.4/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/tray_manager-0.5.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/typed_data-1.4.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/universal_io-2.2.2/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/vector_math-2.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/vm_service-15.0.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/watcher-1.1.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/web-1.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/web_socket-1.0.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/web_socket_channel-3.0.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/webkit_inspection_protocol-1.2.1/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/win32-5.14.0/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/window_manager-0.5.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/yaml-3.1.3/lib" />
-      <root url="file://$PROJECT_DIR$/../../../../../flutter/bin/cache/pkg/sky_engine/lib" />
-      <root url="file://$PROJECT_DIR$/../../../../../flutter/packages/flutter/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
