@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chronon_helm/main.dart';
+import 'package:chronon_helm/util/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:json_events/json_events.dart';
 
@@ -10,15 +10,14 @@ class UnstructuredProcessor {
     String inputPath,
     String outputPath,
   ) async {
-    var apiUrl = Uri.parse('${helmConfig.unstructured}/general/v0/general');
-
-    var request = http.MultipartRequest('POST', apiUrl);
+    Uri apiUrl = Uri.parse('${helmConfig.unstructured}/general/v0/general');
+    http.MultipartRequest request = http.MultipartRequest('POST', apiUrl);
     request.headers['accept'] = 'application/json';
     request.headers['Content-Type'] = 'multipart/form-data';
     request.files.add(await http.MultipartFile.fromPath('files', inputPath));
     request.fields['strategy'] = 'hi_res';
 
-    var streamedResponse = await request.send();
+    http.StreamedResponse streamedResponse = await request.send();
     if (streamedResponse.statusCode != 200) {
       var errorBody = await streamedResponse.stream.bytesToString();
       throw Exception(
@@ -47,6 +46,5 @@ class UnstructuredProcessor {
 
     await s.flush();
     await s.close();
-    print('Output written to $outputPath');
   }
 }

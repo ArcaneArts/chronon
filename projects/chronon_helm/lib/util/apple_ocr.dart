@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fast_log/fast_log.dart';
 import 'package:json_events/json_events.dart';
 import 'package:universal_io/io.dart';
 
@@ -13,8 +14,8 @@ class AppleOCR {
     return File(_appleOcrPath).existsSync();
   }
 
-  static Future<void> _installPortableOcr() async {
-    print('Installing portable OCR setup...');
+  static Future<void> installPortableOcr() async {
+    info('Installing portable OCR setup...');
     ProcessResult archResult = await Process.run('uname', ['-m']);
     if (archResult.exitCode != 0) {
       throw Exception('Failed to detect architecture: ${archResult.stderr}');
@@ -34,10 +35,11 @@ class AppleOCR {
     } else {
       throw Exception('Unsupported architecture: $arch');
     }
+    verbose('Pull $installerUrl as $installerName');
 
-    String installerPath = Directory.current.path + '/' + installerName;
+    String installerPath = '${Directory.current.path}/$installerName';
     if (!File(installerPath).existsSync()) {
-      print('Downloading Miniconda installer...');
+      verbose('Downloading Miniconda installer...');
       ProcessResult downloadResult = await Process.run('curl', [
         '-L',
         '-o',
@@ -49,9 +51,11 @@ class AppleOCR {
           'Download failed: stdout=${downloadResult.stdout}, stderr=${downloadResult.stderr}',
         );
       }
+
+      verbose('Downloaded Installer to $installerPath');
     }
 
-    print('Installing to $_portableDir...');
+    verbose('Installing to $_portableDir...');
     ProcessResult installResult = await Process.run('bash', [
       installerName,
       '-b',
@@ -76,7 +80,7 @@ class AppleOCR {
       return await Process.run('bash', ['-c', fullCommand]);
     }
 
-    print('Accepting ToS for main channel...');
+    verbose('Accepting Conda ToS for main channel...');
     ProcessResult tosMain = await runWithConda(
       'conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main',
     );
@@ -86,7 +90,7 @@ class AppleOCR {
       );
     }
 
-    print('Accepting ToS for r channel...');
+    verbose('Accepting Conda ToS for r channel...');
     ProcessResult tosR = await runWithConda(
       'conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r',
     );
@@ -96,7 +100,7 @@ class AppleOCR {
       );
     }
 
-    print('Creating ocr_env...');
+    verbose('Creating ocr_env...');
     ProcessResult createEnvResult = await runWithConda(
       'conda create -n ocr_env python=3.11 -y',
     );
@@ -106,7 +110,7 @@ class AppleOCR {
       );
     }
 
-    print('Installing poppler...');
+    verbose('Installing poppler...');
     ProcessResult popplerResult = await runWithConda(
       'conda install -c conda-forge poppler -y',
       activate: true,
@@ -117,7 +121,7 @@ class AppleOCR {
       );
     }
 
-    print('Installing apple-vision-utils...');
+    verbose('Installing apple-vision-utils...');
     ProcessResult pipResult = await runWithConda(
       'pip install apple-vision-utils',
       activate: true,
@@ -134,7 +138,16 @@ class AppleOCR {
       );
     }
 
-    print('Portable installation complete.');
+    verbose('Portable installation complete.');
+  }
+
+  static Future<void> ensureInstalled() async {
+    verbose("Checking miniconda installation...");
+    if (!await isInstalled()) {
+      warn('Portable OCR not found, installing... (~3gb)');
+      await installPortableOcr();
+      success('Portable OCR installation complete.');
+    }
   }
 
   static Future<void> performOcr(String pdfPath, String destPath) async {
@@ -142,11 +155,6 @@ class AppleOCR {
       throw Exception('PDF file not found at $pdfPath');
     }
 
-    if (!await isInstalled()) {
-      await _installPortableOcr();
-    }
-
-    print('Running OCR on $pdfPath...');
     final ocrProcess = await Process.start(_appleOcrPath, [
       '-p',
       '-j',
@@ -158,7 +166,7 @@ class AppleOCR {
     StreamSubscription<String> stderrSubscription = ocrProcess.stderr
         .transform(utf8.decoder)
         .listen((data) {
-          print('OCR stderr: $data');
+          error('OCR stderr: $data');
         });
 
     IOSink sink = File(destPath).openWrite();
@@ -187,7 +195,5 @@ class AppleOCR {
     if (exitCode != 0) {
       throw Exception('OCR failed with exit code $exitCode');
     }
-
-    print('OCR complete. Output saved to $destPath');
   }
 }
