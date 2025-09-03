@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:json_events/json_events.dart';
 import 'package:universal_io/io.dart';
 
 String _portableDir = '${Platform.environment['HOME']!}/.chronon/portable_ocr';
@@ -145,7 +147,7 @@ class AppleOCR {
     }
 
     print('Running OCR on $pdfPath...');
-    ProcessResult ocrResult = await Process.run(_appleOcrPath, [
+    final ocrProcess = await Process.start(_appleOcrPath, [
       '-p',
       '-j',
       '--lang',
@@ -153,21 +155,39 @@ class AppleOCR {
       pdfPath,
     ]);
 
-    if (ocrResult.exitCode != 0) {
-      throw Exception(
-        'OCR failed: stdout=${ocrResult.stdout}, stderr=${ocrResult.stderr}',
-      );
-    }
+    StreamSubscription<String> stderrSubscription = ocrProcess.stderr
+        .transform(utf8.decoder)
+        .listen((data) {
+          print('OCR stderr: $data');
+        });
 
-    List<dynamic> jsonOutput = jsonDecode(ocrResult.stdout) as List<dynamic>;
-    StringBuffer buffer = StringBuffer();
-    for (Map<String, dynamic> page in jsonOutput) {
-      if (page["text"] != null) {
-        buffer.writeln(page["text"] ?? "");
+    IOSink sink = File(destPath).openWrite();
+    JsonEvent? le;
+
+    await for (JsonEvent event
+        in ocrProcess.stdout
+            .transform(utf8.decoder)
+            .transform(const JsonEventDecoder())
+            .flatten()) {
+      if (le != null &&
+          le.type == JsonEventType.propertyName &&
+          le.value == "text" &&
+          event.type == JsonEventType.propertyValue) {
+        sink.writeln(event.value ?? "");
       }
+
+      le = event;
     }
 
-    await File(destPath).writeAsString(buffer.toString());
+    await sink.flush();
+    await sink.close();
+    await stderrSubscription.cancel();
+
+    final exitCode = await ocrProcess.exitCode;
+    if (exitCode != 0) {
+      throw Exception('OCR failed with exit code $exitCode');
+    }
+
     print('OCR complete. Output saved to $destPath');
   }
 }
