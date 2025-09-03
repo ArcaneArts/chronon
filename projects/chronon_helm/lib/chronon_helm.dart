@@ -53,6 +53,8 @@ class ChrononHelmServer implements Routing {
 
     while (tries-- > 0) {
       try {
+        print("Start in ${helmConfig.chronon}");
+        print("PWD is ${Directory.current}");
         await shell("docker compose up -d", startIn: helmConfig.chronon);
         success("Docker Cluster is up and running!");
         return;
@@ -71,6 +73,7 @@ class ChrononHelmServer implements Routing {
         }
 
         int delay = (11 - tries);
+        error(e);
         warn(
           "Docker not ready, retrying in $delay second(s)... ($tries tries left)",
         );

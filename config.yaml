@@ -1,0 +1,10 @@
+# Chronon Helm Configuration
+
+# Port for the Helm server to listen on
+port: 7097
+
+# Base URL for the Unstructured API
+unstructured: 'http://localhost:8001'
+
+# The base directory of chronon
+chronon: '../../'
