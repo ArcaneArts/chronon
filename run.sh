@@ -39,6 +39,10 @@ cd - || exit 1
 echo "Pulling Images..."
 docker compose build
 echo "Running Dart project..."
+echo "Pulling Models..."
+ollama pull gpt-oss:20b
+ollama pull nomic-embed-text
+ollama ls
 cd "$PROJECT_DIR" || exit 1
 if [ -f "$ENTRY_POINT" ]; then
     "$DART_BIN" run "$ENTRY_POINT" || exit 1

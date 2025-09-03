@@ -5,7 +5,7 @@
 * Install Docker
 * Install flutter
 * Install ollama on the host directly (its wildly more efficient)
-* Have 4gb of storage (this does NOT include the model storage)
+* Have 18gb of storage/bandwidth (14gb from gpt-oss:20b & nomic-embed-text models)
 
 ## Running the Cluster
 * To start, run `run.command` for macOS or `run.ps1` for windows or just `sh run.sh` for macOS/linux/wsl/git4windows
