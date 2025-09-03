@@ -4,12 +4,12 @@
 ## Prerequisites
 * Install Docker
 * Install flutter
-* If macos, install xcode / xcode commandline tools
 * Install ollama on the host directly (its wildly more efficient)
+* Have 4gb of storage (this does NOT include the model storage)
 
 ## Running the Cluster
-* To start, run `flutter run -d <macos/windows>` to start the helm, then use `docker compose up -d`
-* To stop, just kill the flutter instance and run `docker compose down`
+* To start, run `run.command` for macOS or `run.ps1` for windows or just `sh run.sh` for macOS/linux/wsl/git4windows
+* Terminating the run script will also shut down the cluster & cleanup resources
 
 ## Files & Paths
 * `data/` This is where all of the services store their actual files
@@ -19,7 +19,6 @@
 * `projects/chronon_helm` This is the helm project, see `config.yaml` in here
 
 ## Route Table
-
 | Service       | Internal                                | External               |
 |---------------|-----------------------------------------|------------------------|
 | n8n           | http://n8n_svc:5678                     | http://localhost:5678  |
@@ -33,8 +32,23 @@
 | qdrant        | http://qdrant or http://qdrant_svc:6333 | http://localhost:6333  |
 | helm          | http://helm                             | http://localhost:7097  |
 
-## Additional n8n nodes
+## Initial Setup
+1. Add the n8n-nodes-qdrant in n8n settings
+2. In qDrant, create a new collection
+  * name `main`
+  * for simple search, single tenant
+  * set the vector dim size to `768` (if using `nomic-embed`)
+  * add a `keyword` field named `file`
+  * click create!
+3. Create a new workflow and import the `RAG Engine.json` template
+4. Switch on the activate switch on the workflow
 
+## Basic Usage
+* Add some files into the `chronon/documents/corpus` directory (the workflow is watching it when activated)
+* Notice the processing in the n8n executions tab
+* Open the workflow and click `open chat` and talk with your machine!
+
+## Additional n8n nodes
 You can find them at https://www.npmjs.com/search?q=keywords%3An8n-community-node-package&page=2&perPage=20
 
 * [n8n-nodes-qdrant](https://www.npmjs.com/package/n8n-nodes-qdrant) Greater control over qdrant through n8n via REST
