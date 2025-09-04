@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   n8n_svc:
-    image: n8nio/n8n:latest
+    build: ./docker/n8n
     restart: always
     ports:
       - "5678:5678"
@@ -69,7 +69,6 @@ services:
 
   mongo:
     build: ./docker/mongo
-    image: local-mongo:latest
     restart: always
     ports:
       - "27017:27017"
