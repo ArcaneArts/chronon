@@ -1337,6 +1337,188 @@
       ],
       "id": "83d0d2e5-a9cc-4859-be59-77e81f7f9b8c",
       "name": "readfs"
+    },
+    {
+      "parameters": {
+        "formTitle": "TTS",
+        "formDescription": "Generates an audio file",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "text",
+              "fieldType": "textarea",
+              "placeholder": "The text to speak",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "output",
+              "placeholder": "output.wav",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "voice",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "af_heart"
+                  },
+                  {
+                    "option": "af_alloy"
+                  },
+                  {
+                    "option": "af_aoede"
+                  },
+                  {
+                    "option": "af_bella"
+                  },
+                  {
+                    "option": "af_nicole"
+                  },
+                  {
+                    "option": "af_nova"
+                  },
+                  {
+                    "option": "af_sarah"
+                  },
+                  {
+                    "option": "af_sky"
+                  },
+                  {
+                    "option": "am_fenrir"
+                  },
+                  {
+                    "option": "am_michael"
+                  },
+                  {
+                    "option": "am_puck"
+                  },
+                  {
+                    "option": "bf_emma"
+                  },
+                  {
+                    "option": "bf_isabella"
+                  },
+                  {
+                    "option": "bm_fable"
+                  },
+                  {
+                    "option": "bm_george"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "speed",
+              "fieldType": "number",
+              "placeholder": "1.15"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        144,
+        -976
+      ],
+      "id": "d78b7183-8534-4cc4-a734-1de19d42597f",
+      "name": "TTS",
+      "webhookId": "15617ff5-b9b0-482d-88a1-d65ead157a76"
+    },
+    {
+      "parameters": {
+        "content": "# TTS\nGenerate TTS audio",
+        "height": 256,
+        "width": 464
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        128,
+        -1072
+      ],
+      "id": "7a95bc4c-2f90-4800-9ca7-fb5c61432a19",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://helm/tts",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.text }}"
+            },
+            {
+              "name": "output",
+              "value": "={{ $json.output }}"
+            },
+            {
+              "name": "voice",
+              "value": "={{ $json.voice }}"
+            },
+            {
+              "name": "speed",
+              "value": "={{ $json.speed }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        368,
+        -976
+      ],
+      "id": "ecc2c67b-f8a6-4cd9-9e71-9236ecb03d5a",
+      "name": "tts"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4756235c-538f-4a5c-aa35-06bf0ec5bd51",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "50d0af59-2998-4f36-b893-5d6d631f3052",
+              "name": "output",
+              "value": "=/documents/tts/{{ $json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "263cb1c7-0ed0-4ef9-80ba-9b8ac1ace52c",
+              "name": "voice",
+              "value": "={{ $json.voice }}",
+              "type": "string"
+            },
+            {
+              "id": "91768971-28e3-473e-9bdf-918fbb5c7dd8",
+              "name": "speed",
+              "value": "={{ $json.speed == 0 ? 1 : Math.min(2, Math.max(0.5, $json.speed)) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        256,
+        -976
+      ],
+      "id": "22752b44-1bfc-4686-8e00-a4b88cba223d",
+      "name": "mod"
     }
   ],
   "pinData": {},
@@ -1915,13 +2097,35 @@
           }
         ]
       ]
+    },
+    "TTS": {
+      "main": [
+        [
+          {
+            "node": "mod",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mod": {
+      "main": [
+        [
+          {
+            "node": "tts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "e761fd70-0803-4dfa-8b3b-1858b810b4e1",
+  "versionId": "a4481a48-8612-4586-8c64-162773a7b4ef",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "4b07eb39ab76e508c1311bffcd2dabefcfa1bc354720a93de775e1ebaadf4763"
