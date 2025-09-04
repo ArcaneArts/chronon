@@ -27,8 +27,9 @@ class ChrononHelmServer implements Routing {
     verbose("Listening on port ${helmConfig.port}");
     if (Platform.isMacOS) {
       await AppleOCR.ensureInstalled();
-      await ensureTTSInstalled();
     }
+    await ensureTTSInstalled();
+
     await bootDocker();
     print("");
     print(
