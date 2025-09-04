@@ -1,5 +1,5 @@
 {
-  "name": "RAG Engine",
+  "name": "Main Board",
   "nodes": [
     {
       "parameters": {
@@ -282,7 +282,7 @@
       "typeVersion": 1,
       "position": [
         288,
-        -704
+        -640
       ],
       "id": "7dbf71ab-1973-4c30-a5cd-33f0e32d7256",
       "name": "Split Out"
@@ -305,7 +305,7 @@
       "typeVersion": 3.4,
       "position": [
         416,
-        -704
+        -640
       ],
       "id": "5124601c-f0f1-4ada-88a9-f1daa4c381bd",
       "name": "Edit Fields"
@@ -354,7 +354,7 @@
       "typeVersion": 1,
       "position": [
         160,
-        -704
+        -640
       ],
       "id": "722c4983-4430-425e-a798-266b64911a66",
       "name": "keys",
@@ -407,7 +407,7 @@
     {
       "parameters": {
         "content": "# Boot\nAutomatically handles orphans from missed events, and handles initial setups",
-        "height": 464,
+        "height": 400,
         "width": 768,
         "color": 7
       },
@@ -415,7 +415,7 @@
       "typeVersion": 1,
       "position": [
         -176,
-        -800
+        -736
       ],
       "id": "a34eb756-bf69-4450-91b6-6154b1ab1271",
       "name": "Sticky Note"
@@ -430,7 +430,7 @@
       "typeVersion": 1,
       "position": [
         -144,
-        -704
+        -640
       ],
       "id": "ce806497-02e2-442f-bd85-a6583495658b",
       "name": "onBoot"
@@ -472,7 +472,7 @@
       "typeVersion": 1,
       "position": [
         32,
-        -704
+        -640
       ],
       "id": "8813913a-bbac-4635-a29d-a764b939c3d2",
       "name": "Execute Command"
@@ -519,7 +519,7 @@
       "typeVersion": 1,
       "position": [
         736,
-        -160
+        -208
       ],
       "id": "fe8796b6-f989-44fe-a060-45aeab6c6e87",
       "name": "nomic",
@@ -550,7 +550,7 @@
       "typeVersion": 1.1,
       "position": [
         816,
-        -160
+        -208
       ],
       "id": "29ae01f2-f3af-44b2-89a7-3b1bbe041db8",
       "name": "loader"
@@ -564,7 +564,7 @@
       "typeVersion": 1,
       "position": [
         800,
-        -16
+        -64
       ],
       "id": "dd731e20-ecbe-44c0-9372-de8498202f61",
       "name": "saveState",
@@ -585,7 +585,7 @@
       "typeVersion": 1,
       "position": [
         1168,
-        -288
+        -336
       ],
       "id": "5e8e86ad-17ee-44c6-8930-7033614571e9",
       "name": "saveState1",
@@ -605,7 +605,7 @@
       "typeVersion": 2,
       "position": [
         912,
-        -16
+        -64
       ],
       "id": "7b0f8060-de68-43ff-b922-d3816efe3432",
       "name": "ext1"
@@ -640,7 +640,7 @@
       "typeVersion": 1.3,
       "position": [
         816,
-        -288
+        -336
       ],
       "id": "740b4d22-28fc-4fcd-8079-cb32e2a2bf7d",
       "name": "install3",
@@ -668,7 +668,7 @@
       "typeVersion": 1,
       "position": [
         688,
-        -16
+        -64
       ],
       "id": "81eeaae6-9231-4c6e-852f-771a485f61bb",
       "name": "uninstall2",
@@ -682,7 +682,7 @@
     {
       "parameters": {
         "content": "# Install\nReceives a path, hash of the path, and a bool to install or not. Can uninstall with install=false",
-        "height": 736,
+        "height": 688,
         "width": 752,
         "color": 5
       },
@@ -703,7 +703,7 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        -384,
+        -544,
         -496
       ],
       "id": "56761cf5-8baa-4487-aaa3-a9ce3679dba6",
@@ -723,7 +723,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        -528,
+        -656,
         -496
       ],
       "id": "310ed986-4b47-4675-8896-40895c5a557b",
@@ -757,8 +757,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -528,
-        -688
+        -576,
+        -640
       ],
       "id": "98bbda6c-b92c-463d-92de-2fef96182350",
       "name": "If1"
@@ -772,8 +772,8 @@
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        -672,
-        -496
+        -352,
+        -640
       ],
       "id": "581651c6-aee3-4bed-bf84-6e62dd59ec97",
       "name": "keys1",
@@ -787,15 +787,15 @@
     {
       "parameters": {
         "content": "# Wipe Database\nWipes the qDrant DB, redis & caches",
-        "height": 448,
-        "width": 544,
+        "height": 400,
+        "width": 512,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -736,
-        -784
+        -704,
+        -736
       ],
       "id": "8dd955bf-8f4b-4b0e-a9b0-e34e9c5d6511",
       "name": "Sticky Note4"
@@ -816,8 +816,8 @@
       "type": "n8n-nodes-qdrant.qdrant",
       "typeVersion": 1,
       "position": [
-        -384,
-        -688
+        -464,
+        -640
       ],
       "id": "8b917e57-e279-4820-a47b-fd834cab7aa8",
       "name": "wipe",
@@ -844,7 +844,7 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1.3,
       "position": [
-        -544,
+        -528,
         -80
       ],
       "id": "50936468-f895-4d42-9bfa-d2f6ca02186c",
@@ -864,7 +864,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
       "typeVersion": 1,
       "position": [
-        -736,
+        -720,
         -80
       ],
       "id": "d4a5bade-e7da-4dee-b861-e5b847010c78",
@@ -885,7 +885,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        -608,
+        -592,
         -224
       ],
       "id": "1a560c2b-b2fe-47d7-978d-c938fb41f11d",
@@ -898,7 +898,7 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.1,
       "position": [
-        -736,
+        -720,
         -224
       ],
       "id": "ee4977fe-f292-43ec-bc19-f51064c6d4c3",
@@ -912,7 +912,7 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
       "typeVersion": 1,
       "position": [
-        -640,
+        -624,
         -80
       ],
       "id": "e1ed43c6-051e-4bac-b2b3-d085b0828e57",
@@ -928,13 +928,13 @@
       "parameters": {
         "content": "# Agent Chat\nChat with the agent to interact with data",
         "height": 368,
-        "width": 496,
+        "width": 480,
         "color": 6
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -752,
+        -736,
         -320
       ],
       "id": "c9a1ae04-45ec-4bf1-9c6c-651e49b54e1b",
@@ -1102,7 +1102,7 @@
       "typeVersion": 1,
       "position": [
         1056,
-        -288
+        -336
       ],
       "id": "cdf767b9-9e98-4ca2-8a7e-1e9c5044abe6",
       "name": "agg"
@@ -1115,7 +1115,7 @@
       "typeVersion": 1,
       "position": [
         1024,
-        -16
+        -64
       ],
       "id": "44069345-ba62-43b4-8192-1c5b33c066aa",
       "name": "remtext"
@@ -1130,7 +1130,7 @@
       "typeVersion": 1,
       "position": [
         1056,
-        -160
+        -208
       ],
       "id": "ba8fb2c7-eea5-470f-af3b-c3b14e1ef571",
       "name": "rcts"
@@ -1183,31 +1183,12 @@
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2.2,
       "position": [
-        -672,
-        -688
+        -688,
+        -640
       ],
       "id": "53fbda4b-3cc7-49ec-9127-f96b4a50ca3b",
       "name": "WIPE",
       "webhookId": "6c0c1293-f9e7-42ed-a540-3cc9c4ff4ffb"
-    },
-    {
-      "parameters": {
-        "contextWindowLength": 10
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
-      "typeVersion": 1,
-      "position": [
-        -336,
-        -208
-      ],
-      "id": "d7f44c4b-f683-4bfb-8378-d9fe91b51897",
-      "name": "MongoDB Chat Memory",
-      "credentials": {
-        "mongoDb": {
-          "id": "fkqtd4eD8KlxUkVd",
-          "name": "MongoDB account"
-        }
-      }
     },
     {
       "parameters": {
@@ -1310,7 +1291,7 @@
       "parameters": {
         "content": "# Stringify\nUpload a file and get text files into the /documents/stringify directory",
         "height": 256,
-        "width": 800,
+        "width": 768,
         "color": 2
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -1422,7 +1403,7 @@
       "typeVersion": 2.3,
       "position": [
         144,
-        -976
+        -912
       ],
       "id": "d78b7183-8534-4cc4-a734-1de19d42597f",
       "name": "TTS",
@@ -1438,7 +1419,7 @@
       "typeVersion": 1,
       "position": [
         128,
-        -1072
+        -1008
       ],
       "id": "7a95bc4c-2f90-4800-9ca7-fb5c61432a19",
       "name": "Sticky Note6"
@@ -1474,7 +1455,7 @@
       "typeVersion": 4.2,
       "position": [
         368,
-        -976
+        -912
       ],
       "id": "ecc2c67b-f8a6-4cd9-9e71-9236ecb03d5a",
       "name": "tts"
@@ -1515,10 +1496,29 @@
       "typeVersion": 3.4,
       "position": [
         256,
-        -976
+        -912
       ],
       "id": "22752b44-1bfc-4686-8e00-a4b88cba223d",
       "name": "mod"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -208
+      ],
+      "id": "d7f44c4b-f683-4bfb-8378-d9fe91b51897",
+      "name": "mem",
+      "credentials": {
+        "mongoDb": {
+          "id": "fkqtd4eD8KlxUkVd",
+          "name": "MongoDB account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -2028,17 +2028,6 @@
         ]
       ]
     },
-    "MongoDB Chat Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Stringify": {
       "main": [
         [
@@ -2119,13 +2108,24 @@
           }
         ]
       ]
+    },
+    "mem": {
+      "ai_memory": [
+        [
+          {
+            "node": "agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "a4481a48-8612-4586-8c64-162773a7b4ef",
+  "versionId": "a928189b-733b-47cf-bc40-e17576fdf96d",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "4b07eb39ab76e508c1311bffcd2dabefcfa1bc354720a93de775e1ebaadf4763"
