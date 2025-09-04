@@ -27,6 +27,7 @@ class ChrononHelmServer implements Routing {
     verbose("Listening on port ${helmConfig.port}");
     if (Platform.isMacOS) {
       await AppleOCR.ensureInstalled();
+      await ensureTTSInstalled();
     }
     await bootDocker();
     print("");
@@ -55,8 +56,6 @@ class ChrononHelmServer implements Routing {
 
     while (tries-- > 0) {
       try {
-        print("Start in ${helmConfig.chronon}");
-        print("PWD is ${Directory.current}");
         await shell("docker compose up -d", startIn: helmConfig.chronon);
         info("Docker cluster started");
         return;
@@ -153,6 +152,7 @@ class ChrononHelmServer implements Routing {
   @override
   Router get router => Router()
     ..post("/process", process)
+    ..post("/tts", tts)
     ..post("/command", command);
 
   Future<Response> process(Request request) async {
@@ -167,6 +167,23 @@ class ChrononHelmServer implements Routing {
       compat: b['compat'] == "true",
     );
     return Response.ok('Processed $input to $output');
+  }
+
+  Future<Response> tts(Request request) async {
+    Map<String, dynamic> b = jsonDecode(await request.readAsString());
+    String text = b['text']!;
+    String voice = b['voice'] ?? "af_heart";
+    String speed = b['speed']?.toString() ?? "1.15";
+    String langCode = voice.substring(0, 1);
+    String output = helmConfig.toAbs(b['output']);
+    File(output).parent.createSync(recursive: true);
+
+    await shell(
+      'sh run.sh --text "${text.replaceAll('"', '\\"')}" --voice "$voice" --speed $speed --lang_code $langCode --output "$output"',
+      startIn: "${helmConfig.chronon}/projects/chronon_tts",
+    );
+
+    return Response.ok('Done');
   }
 
   Future<Response> command(Request request) async {
@@ -219,6 +236,25 @@ class ChrononHelmServer implements Routing {
       return Response.ok(responseBody);
     } catch (e) {
       return Response(500, body: 'Error executing command: $e');
+    }
+  }
+
+  Future<void> ensureTTSInstalled() async {
+    Directory dir = Directory(
+      '${helmConfig.chronon}/projects/chronon_tts/kokoro-env',
+    );
+
+    if (!dir.existsSync()) {
+      verbose("Installing TTS environment... (~1gb)");
+      await shell(
+        "sh install.sh",
+        startIn: dir.parent.absolute.path,
+      ).catchError((e) {
+        error("Failed to install TTS environment: $e");
+      });
+      success("TTS environment installed.");
+    } else {
+      verbose("TTS environment is available.");
     }
   }
 }
