@@ -161,6 +161,10 @@ class AppleOCR {
       '-j',
       '--lang',
       'en-US',
+      // '--recognition-level',
+      // 'accurate',
+      // '--language-correction',
+      // 'true',
       pdfPath,
     ]);
 

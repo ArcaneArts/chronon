@@ -1208,6 +1208,135 @@
           "name": "MongoDB account"
         }
       }
+    },
+    {
+      "parameters": {
+        "formTitle": "Stringify",
+        "formDescription": "Stringify a file into a raw text file",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "File",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        -768
+      ],
+      "id": "d07f83c4-9a7e-4e30-89b0-1bc037630989",
+      "name": "Stringify",
+      "webhookId": "020f6d18-df8b-41b9-9893-19a46294ff44"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const s = $input.item.json.File.filename.split(\".\");\n$input.item.json.extension = s[s.length - 1].toLowerCase();\n$input.item.json.tempPath = \"/documents/stringify/\" + $input.item.json.File.filename;\n$input.item.json.textPath = \"/documents/stringify/\" + $input.item.json.File.filename + \".txt\";\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        -768
+      ],
+      "id": "c1be3731-7ecf-40e0-9290-8c4d3999736f",
+      "name": "ext3"
+    },
+    {
+      "parameters": {
+        "command": "=mkdir -p /documents/stringify"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        848,
+        -768
+      ],
+      "id": "0fba0baa-8a76-4db0-9fb1-31c556eddd61",
+      "name": "Execute Command1"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        -768
+      ],
+      "id": "a1720523-ee04-44b3-9c48-785cda7b60db",
+      "name": "Wait1",
+      "webhookId": "0f3358cd-f60e-4912-ab7a-8e515f7afd61"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://helm/process",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "input",
+              "value": "={{ $json.tempPath }}"
+            },
+            {
+              "name": "output",
+              "value": "={{ $json.textPath }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 3600000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1184,
+        -768
+      ],
+      "id": "af708ade-11a4-4f07-ae07-49385c3f8afd",
+      "name": "helm1"
+    },
+    {
+      "parameters": {
+        "content": "# Stringify\nUpload a file and get text files into the /documents/stringify directory",
+        "height": 256,
+        "width": 800,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        608,
+        -864
+      ],
+      "id": "5a8ead2e-03f6-4a62-acd3-98779a14e606",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $json.tempPath }}",
+        "dataPropertyName": "File",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        -768
+      ],
+      "id": "83d0d2e5-a9cc-4859-be59-77e81f7f9b8c",
+      "name": "readfs"
     }
   ],
   "pinData": {},
@@ -1727,13 +1856,72 @@
           }
         ]
       ]
+    },
+    "Stringify": {
+      "main": [
+        [
+          {
+            "node": "ext3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ext3": {
+      "main": [
+        [
+          {
+            "node": "Execute Command1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command1": {
+      "main": [
+        []
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "readfs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "helm1": {
+      "main": [
+        []
+      ]
+    },
+    "readfs": {
+      "main": [
+        [
+          {
+            "node": "helm1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "91a6ab75-bd65-4622-89b6-0e5c37cc4075",
+  "versionId": "e761fd70-0803-4dfa-8b3b-1858b810b4e1",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "4b07eb39ab76e508c1311bffcd2dabefcfa1bc354720a93de775e1ebaadf4763"
