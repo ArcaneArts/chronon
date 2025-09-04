@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   n8n_svc:
-    build: ./docker/n8n
+    image: n8nio/n8n:latest
     restart: always
     ports:
       - "5678:5678"
@@ -15,7 +15,9 @@ services:
       - DB_POSTGRESDB_USER=postgres
       - DB_POSTGRESDB_PASSWORD=postgres
       - EXECUTIONS_MODE=regular
-      - N8N_CONCURRENCY_PRODUCTION_LIMIT=50
+      - N8N_CONCURRENCY_PRODUCTION_LIMIT=16
+      - N8N_COMMUNITY_NODES_ENABLED=true
+      - N8N_ONBOARDING_FLOW_DISABLED=true
     volumes:
       - ./data/n8n:/home/node/.n8n
       - ./documents:/documents

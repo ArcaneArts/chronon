@@ -2,14 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:chronon_helm/util/config.dart';
 import 'package:fast_log/fast_log.dart';
 import 'package:json_events/json_events.dart';
 import 'package:universal_io/io.dart';
 
-String _portableDir = '${Platform.environment['HOME']!}/.chronon/portable_ocr';
-String _appleOcrPath = '$_portableDir/envs/ocr_env/bin/apple-ocr';
-
 class AppleOCR {
+  static String get _portableDir => '${helmConfig.chronon}/data/portable_ocr';
+  static String get _appleOcrPath => '$_portableDir/envs/ocr_env/bin/apple-ocr';
+
   static Future<bool> isInstalled() async {
     return File(_appleOcrPath).existsSync();
   }
@@ -144,7 +145,7 @@ class AppleOCR {
   static Future<void> ensureInstalled() async {
     verbose("Checking miniconda installation...");
     if (!await isInstalled()) {
-      warn('Portable OCR not found, installing... (~3gb)');
+      warn('Portable OCR not found, installing... (~2gb)');
       await installPortableOcr();
       success('Portable OCR installation complete.');
     }

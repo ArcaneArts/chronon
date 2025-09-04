@@ -17,7 +17,9 @@ bool _shuttingDown = false;
 
 class ChrononHelmServer implements Routing {
   late final HttpServer server;
+  bool active = false;
   Future<void> start() async {
+    active = true;
     PrecisionStopwatch p = PrecisionStopwatch.start();
     _addShutdownHooks();
     await loadHelmConfig();
@@ -56,7 +58,7 @@ class ChrononHelmServer implements Routing {
         print("Start in ${helmConfig.chronon}");
         print("PWD is ${Directory.current}");
         await shell("docker compose up -d", startIn: helmConfig.chronon);
-        success("Docker Cluster is up and running!");
+        info("Docker cluster started");
         return;
       } catch (e) {
         try {
@@ -83,6 +85,7 @@ class ChrononHelmServer implements Routing {
   }
 
   Future<void> stop() async {
+    active = false;
     info("Shutting down Chronon Helm...");
     verbose("Shutting down Docker Cluster");
     await shell("docker compose down", startIn: helmConfig.chronon);
