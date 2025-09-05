@@ -1,0 +1,516 @@
+{
+  "name": "Brain Drill",
+  "nodes": [
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n    \"title\": \"The title of this quiz\",\n    \"description\": \"A short description of this quiz\",\n\t\"questions\": [\n      {\n        \"question\": \"First Question\",\n        \"correct\": 0,\n        \"choices\": [\n          \"choice 1\",\n          \"choice 2\",\n          \"choice 3\"\n        ]\n      }\n    ]\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        928,
+        368
+      ],
+      "id": "5f1c49ac-b2cd-40cc-a53a-d796da069431",
+      "name": "Output Parser"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Make a {{ Math.min(Math.max(1, $json.Questions), 50) }} question quiz on {{ $json.Topic }}. Query the database first to get the information first so you know how to quiz them. Each question should be multiple choice, and mark which answer is correct. In the question, offer a hint of what page to look for or where to find it in the source text you are querying about if you can find it. Also dont number your questions as they will be shuffled in the future",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        672,
+        240
+      ],
+      "id": "d7396a93-95bf-49cf-a7d1-364db98b661d",
+      "name": "Quiz Builder",
+      "executeOnce": true,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}\n\n---\n\nYour job is to take the quiz defined and convert it into a json formatted quiz: \n\n{\n    \"title\": \"The title of this quiz\",\n    \"description\": \"The description / summary of this quiz\"\n\t\"questions\": [\n      {\n        \"question\": \"First Question\",\n        \"correct\": 0,\n        \"choices\": [\n          \"choice 1\",\n          \"choice 2\",\n          \"choice 3\"\n        ]\n      },\n      {\n        \"question\": \"Second Question\",\n        \"correct\": 2,\n        \"choices\": [\n          \"choice 1\",\n          \"choice 2\",\n          \"choice 3\"\n        ]\n      }\n    ]\n}\n\n\nThat is the format of the quiz. The correct answer is marked as the array index of the choiuces. \n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        928,
+        240
+      ],
+      "id": "70945147-c13c-41b7-8b6a-12afa530b9c6",
+      "name": "Quiz Formatter",
+      "alwaysOutputData": false,
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "jsCode": "// Input: Quiz JSON from previous node (e.g., AI output)\nconst questions = $input.first().json.output.questions\nif (!questions.length) {\n  throw new Error('No questions found in input JSON');\n}\n\n// Enable quiz mode first\nlet requests = [\n  {\n    \"updateSettings\": {\n      \"settings\": {\n        \"quizSettings\": {\n          \"isQuiz\": true\n        }\n      },\n      \"updateMask\": \"quizSettings.isQuiz\"\n    }\n  },\n  {\n    \"updateFormInfo\": {\n      \"info\": {\n        \"title\": $input.first().json.output.title,  \n        \"description\": $input.first().json.output.description  \n      },\n      \"updateMask\": \"title,description\"  // Or \"title,description\" if updating both\n    }\n  }\n];\n\n// Add each multiple-choice question with grading\nquestions.forEach((q, index) => {\n  if (!Array.isArray(q.choices) || q.correct == null || q.correct < 0 || q.correct >= q.choices.length) {\n    throw new Error(`Invalid question at index ${index}: Missing choices or invalid correct index`);\n  }\n  const correctValue = q.choices[q.correct];\n  requests.push({\n    \"createItem\": {\n      \"item\": {\n        \"title\": q.question,\n        \"questionItem\": {\n          \"question\": {\n            \"required\": true, \n            \"choiceQuestion\": {\n              \"type\": \"RADIO\", \n              \"options\": q.choices.map(choice => ({ \"value\": choice })),\n              \"shuffle\": true \n            },\n            \"grading\": {\n              \"pointValue\": 1, \n              \"correctAnswers\": {\n                \"answers\": [{ \"value\": correctValue }]\n              },\n              // Removed: \"generalFeedback\": { \"text\": \"Review the material.\" },  // Not allowed for auto-graded questions\n              \"whenRight\": { \"text\": \"Great job!\" }, \n              \"whenWrong\": { \"text\": \"Incorrect, try again.\" }\n            }\n          }\n        }\n      },\n      \"location\": {\n        \"index\": index\n      }\n    }\n  });\n});\n\n// Output the batchUpdate body\nreturn { json: { requests } };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        240
+      ],
+      "id": "ceb7c387-25a4-4f17-bfd0-5cbdfa1b9293",
+      "name": "Form Request Builder",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.googleapis.com/drive/v3/files/101pAzmXvgihL35_BblYrUi_QoebgL34MwXoCAw0FBtU/copy",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"name\": \"{{ $('Quiz Formatter').item.json.output.title }}\"}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1360,
+        240
+      ],
+      "id": "cf952653-658a-4ef9-bb57-3535ee270978",
+      "name": "GForm Template",
+      "executeOnce": false,
+      "credentials": {
+        "oAuth2Api": {
+          "id": "LcKHqLzRm78qvjk9",
+          "name": "Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://forms.googleapis.com/v1/forms/{{ $json.id }}:batchUpdate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ requests: $node[\"Form Request Builder\"].json.requests }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1488,
+        240
+      ],
+      "id": "5ea1a6fa-55f2-49b5-96b2-e58870b63b11",
+      "name": "GForm Writer",
+      "executeOnce": false,
+      "credentials": {
+        "oAuth2Api": {
+          "id": "LcKHqLzRm78qvjk9",
+          "name": "Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://www.googleapis.com/drive/v3/files/{{ $node[\"GForm Template\"].json.id }}/permissions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"role\": \"writer\", \"type\": \"anyone\"}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1248,
+        448
+      ],
+      "id": "4df1fa30-36d3-4faa-a8df-9a3b4b2b3310",
+      "name": "Unrestrict",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "LcKHqLzRm78qvjk9",
+          "name": "Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://forms.googleapis.com/v1/forms/{{ $node[\"GForm Template\"].json.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1472,
+        448
+      ],
+      "id": "7414cfc2-e30e-433f-b89c-c0dd34d27855",
+      "name": "Get URL",
+      "credentials": {
+        "oAuth2Api": {
+          "id": "LcKHqLzRm78qvjk9",
+          "name": "Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://forms.googleapis.com/v1/forms/{{ $node[\"GForm Template\"].json.id }}:setPublishSettings",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"publishSettings\": {\n    \"publishState\": {\n      \"isPublished\": true,\n      \"isAcceptingResponses\": true\n    }\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1360,
+        448
+      ],
+      "id": "18ab9dc3-df78-45fc-b2b8-733c4847cb3e",
+      "name": "GForm Publish",
+      "executeOnce": false,
+      "credentials": {
+        "oAuth2Api": {
+          "id": "LcKHqLzRm78qvjk9",
+          "name": "Google"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-oss:120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        384,
+        368
+      ],
+      "id": "16f3e249-28f5-4481-b238-002c15cd587c",
+      "name": "oss",
+      "credentials": {
+        "ollamaApi": {
+          "id": "uRRto14J4fbOBnhw",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        480,
+        368
+      ],
+      "id": "a49fd555-4d6d-4773-ac3b-685c4b018a2a",
+      "name": "nomic1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "uRRto14J4fbOBnhw",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "The knowledge base",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "main",
+          "mode": "list",
+          "cachedResultName": "main"
+        },
+        "topK": 10,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        576,
+        368
+      ],
+      "id": "71476b46-e00d-44d2-8846-5e9956104b2d",
+      "name": "onQuery1",
+      "credentials": {
+        "qdrantApi": {
+          "id": "l8KKOWm103sXubkj",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Quiz Builder",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Topic",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Questions",
+              "fieldType": "number",
+              "placeholder": "10",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        544,
+        240
+      ],
+      "id": "f16cef57-caf1-4f19-b8ac-2577aebb1f3a",
+      "name": "On form submission",
+      "webhookId": "6259920a-bd89-4581-bf1a-feebbc631d96"
+    },
+    {
+      "parameters": {
+        "model": "gpt-oss:120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        832,
+        368
+      ],
+      "id": "8ab17ba5-5e0a-46a9-9ed6-77c3bf709329",
+      "name": "oss1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "uRRto14J4fbOBnhw",
+          "name": "Ollama account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Quiz Formatter",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quiz Builder": {
+      "main": [
+        [
+          {
+            "node": "Quiz Formatter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quiz Formatter": {
+      "main": [
+        [
+          {
+            "node": "Form Request Builder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Request Builder": {
+      "main": [
+        [
+          {
+            "node": "GForm Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GForm Template": {
+      "main": [
+        [
+          {
+            "node": "GForm Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GForm Writer": {
+      "main": [
+        [
+          {
+            "node": "Unrestrict",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unrestrict": {
+      "main": [
+        [
+          {
+            "node": "GForm Publish",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get URL": {
+      "main": [
+        []
+      ]
+    },
+    "GForm Publish": {
+      "main": [
+        [
+          {
+            "node": "Get URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "nomic1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "onQuery1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onQuery1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Quiz Builder",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "oss": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Quiz Builder",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Quiz Builder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "oss1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Quiz Formatter",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a49edc1a-b0f6-46fa-9d74-07bf3a566085",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4b07eb39ab76e508c1311bffcd2dabefcfa1bc354720a93de775e1ebaadf4763"
+  },
+  "id": "aU9lpAz30YJeoF66",
+  "tags": []
+}

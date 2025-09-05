@@ -1,6 +1,6 @@
 $SDK_VERSION = "3.9.2"
-$PLATFORM = "macos"
-$ARCH = "arm64"
+$PLATFORM = "windows"
+$ARCH = "x64"
 $ZIP_URL = "https://storage.googleapis.com/dart-archive/channels/stable/release/$SDK_VERSION/sdk/dartsdk-$PLATFORM-$ARCH-release.zip"
 $BASE_DIR = Get-Location
 $TEMP_DIR = Join-Path $BASE_DIR "data"

@@ -1,0 +1,204 @@
+{
+  "name": "Agent Chat",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "The knowledge base",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "main",
+          "mode": "list",
+          "cachedResultName": "main"
+        },
+        "topK": 10,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        240
+      ],
+      "id": "cbb5374f-880a-4a9d-a5a4-e67e0601dcfa",
+      "name": "onQuery",
+      "credentials": {
+        "qdrantApi": {
+          "id": "l8KKOWm103sXubkj",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-oss:20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        16,
+        240
+      ],
+      "id": "d5117cc4-d8e5-4c70-96f9-6e815c9f988d",
+      "name": "oss",
+      "credentials": {
+        "ollamaApi": {
+          "id": "uRRto14J4fbOBnhw",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful SME on a bunch of information accessible via tool calling. When the user asks you a question, you most likely will need to query the knowledge base first before answering even if it seems like you already know the common answer, always query first.\n\n* Always specify the \"file\" parameter to source where your getting your information from"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        144,
+        96
+      ],
+      "id": "d777ad1f-43aa-403f-8de4-0e7af9a9137a",
+      "name": "agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        96
+      ],
+      "id": "d8ec1210-92a6-4540-aad1-bfd70edcb43b",
+      "name": "onChat",
+      "webhookId": "c99bf8f0-9dc8-4643-935c-074d7729e732"
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        112,
+        240
+      ],
+      "id": "932f812d-d60b-4422-b352-4389f08571ff",
+      "name": "nomic1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "uRRto14J4fbOBnhw",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Agent Chat\nChat with the agent to interact with data",
+        "height": 368,
+        "width": 480,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8a746d10-86f2-4dbc-9869-8a54a18c7c94",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        384,
+        112
+      ],
+      "id": "0460b7b8-d16e-4ef4-927f-6b361bea5c83",
+      "name": "mem",
+      "credentials": {
+        "mongoDb": {
+          "id": "fkqtd4eD8KlxUkVd",
+          "name": "MongoDB account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "onQuery": {
+      "ai_tool": [
+        [
+          {
+            "node": "agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "oss": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onChat": {
+      "main": [
+        [
+          {
+            "node": "agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "nomic1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "onQuery",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mem": {
+      "ai_memory": [
+        [
+          {
+            "node": "agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "993fba4e-6552-4dee-b4dd-754399edb872",
+  "meta": {
+    "instanceId": "4b07eb39ab76e508c1311bffcd2dabefcfa1bc354720a93de775e1ebaadf4763"
+  },
+  "id": "1zAGNSaHUR21e5ua",
+  "tags": []
+}

@@ -1,0 +1,225 @@
+{
+  "name": "Wipe DB",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $json.keys }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        656,
+        480
+      ],
+      "id": "db8d86ef-3489-47b3-9653-75f02efb3888",
+      "name": "deleteKey",
+      "credentials": {
+        "redis": {
+          "id": "8bQQYAUHxegPNwcL",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "keys",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        544,
+        480
+      ],
+      "id": "8ca2040b-c0e6-4a73-96cc-ec607f708a9f",
+      "name": "loop"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2514da39-5f9b-4684-a713-16821d72cceb",
+              "leftValue": "={{ $json['Type DELETE to confirm'] }}",
+              "rightValue": "DELETE",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        336
+      ],
+      "id": "0d33eb07-1998-4946-bf8d-613d022be007",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "keys",
+        "keyPattern": "*",
+        "getValues": false
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        848,
+        336
+      ],
+      "id": "dc054f32-b69c-4d0a-a8c5-689b8e91bdf9",
+      "name": "keys1",
+      "credentials": {
+        "redis": {
+          "id": "8bQQYAUHxegPNwcL",
+          "name": "Redis account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Wipe Database\nWipes the qDrant DB, redis & caches",
+        "height": 400,
+        "width": 512,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        496,
+        240
+      ],
+      "id": "b479b0f3-a23e-4faf-b74d-e1d9b66f9ad1",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "resource": "point",
+        "operation": "deletePoints",
+        "collectionName": {
+          "__rl": true,
+          "value": "main",
+          "mode": "list",
+          "cachedResultName": "main"
+        },
+        "filter": "{\n    \"must\": [\n      \n    ]\n  }",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-qdrant.qdrant",
+      "typeVersion": 1,
+      "position": [
+        736,
+        336
+      ],
+      "id": "9ff711a1-e756-4cd7-afaa-aace0fec128e",
+      "name": "wipe",
+      "credentials": {
+        "qdrantRestApi": {
+          "id": "3NNZvUwDOwYTVrHs",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Are you sure?",
+        "formDescription": "You are about to wipe the qDrant vector store, and the redis cache list. This will not delete any actual files in the documents/corpus directory. \\n\\nOnce executed, remember to de-activate, then re-activate the onFS event to bulk-trigger any existing files in the corpus directory to ensure they are synchronized.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Type DELETE to confirm",
+              "placeholder": "DELETE",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        512,
+        336
+      ],
+      "id": "405dfa3a-a0c3-40e1-96a9-02027dc1824d",
+      "name": "WIPE",
+      "webhookId": "6c0c1293-f9e7-42ed-a540-3cc9c4ff4ffb"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "loop": {
+      "main": [
+        [
+          {
+            "node": "deleteKey",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "keys1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "wipe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "keys1": {
+      "main": [
+        [
+          {
+            "node": "loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WIPE": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "375b449e-7a63-4be1-ad97-de810cbb7211",
+  "meta": {
+    "instanceId": "4b07eb39ab76e508c1311bffcd2dabefcfa1bc354720a93de775e1ebaadf4763"
+  },
+  "id": "gUt05yS86ISEypqL",
+  "tags": []
+}
